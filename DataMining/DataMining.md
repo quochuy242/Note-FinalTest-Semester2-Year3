@@ -1,3 +1,6 @@
+
+![Data Mining](DataMiningFiglet.png)
+#HCMUS #DataMining
 # Thông tin kỳ thi
 
 Thời gian: 9h55 - 29/06/2024
