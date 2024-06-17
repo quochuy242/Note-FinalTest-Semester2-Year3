@@ -1,5 +1,5 @@
 ![Machine Learning](MachineLearningFiglet.png)
-#MachineLearning #HCMUS
+#AI/MachineLearning #HCMUS
 
 # Thông tin kỳ thi
 
@@ -8,8 +8,12 @@ Phòng thi: E402 (NVC)
 
 # Lecture 0: Introduce to Machine Learning
 
-#MachineLearning #DeepLearning #AI #SupervisedLearning
-#UnsupervisedLearning #ReinforcementLearning
+#AI
+#AI/MachineLearning 
+#AI/MachineLearning/DeepLearning 
+#AI/MachineLearning/SupervisedLearning
+#AI/MachineLearning/UnsupervisedLearning 
+#AI/MachineLearning/ReinforcementLearning
 ![Relationship between Machine Learning, Deep Learning and Artificial Intelligence](relationship_ML_DL_AI.jpg)
 
 Types of ML (Machine Learning):
@@ -20,8 +24,10 @@ Types of ML (Machine Learning):
 
 # Lecture 1: Linear Regression
 
-#Regression #LinearRegression #Regularization #ScalingData #SupervisedLearning
-
+#AI/MachineLearning/Regression 
+#AI/MachineLearning/Regularization 
+#AI/MachineLearning/SupervisedLearning 
+#DataMining/NormalizedData  
 ![Example of Linear Regression](example_regression.jpg)
 
 $$y = \theta _0 + \theta_1 x_1 + \theta_2 x_2 + ... + \theta_d x_d = \sum_{j=0}^{d} \theta_j x_j$$
@@ -127,7 +133,9 @@ $$J(\theta) = \frac{1}{2n} \sum_{i=1}^{n} (h_{\theta} (x^{(i)}) - y^{(i)})^2 + \
 
 # Lecture 2: Logistic Regression
 
-#LogisticRegression #Classification #SupervisedLearning #Metrics
+ #AI/MachineLearning/Classification 
+ #AI/MachineLearning/SupervisedLearning 
+ #AI/MachineLearning/Metrics
 
 Đây là thuật toán dùng cho mục đích Classification (Binary hoặc Multi-class classification)
 
@@ -165,3 +173,30 @@ Tương tự như Linear Regression, ta cũng thêm đại lượng $\lambda \su
 ## Metrics
 
 ![Metric CLR](metrics_clr.jpg)
+
+# Lecture 3: Naive Bayes Classification
+
+#Statistic/BayesTheorem
+#AI/MachineLearning/Classification 
+#AI/MachineLearning/NaiveBayes
+#AI/MachineLearning/SupervisedLearning 
+
+![[naivebayes_pipeline.jpg]]
+
+Chữ "naive" có ý nghĩa giả định sự xuất hiện của một feature đang xét là độc lập với sự xuất hiện của các feature khác
+
+![[example_naivebayes.jpg]]
+
+## Bayes Theorem
+
+$$P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}$$
+Trong đó: $P(A|B)$ là xác suất xuât hiện của $A$ được cho trước bởi sự kiện $B$
+
+Ví dụ về Bayes Theorem: Tính xác suất của một lá bài Queen được cho bởi Face (là bài hình)
+
+- Without Bayes Theorem:
+	$$P(Queen|Face) = \frac{4}{12} = \frac{1}{3}$$
+- With Bayes Theorem:
+$$P(Queen|Face) = \frac{P(Face|Queen) \times P(Queen)}{P(Face)} = \frac{1 + \frac{4}{52}}{\frac{12}{52}} = \frac{1}{3}$$
+
+
