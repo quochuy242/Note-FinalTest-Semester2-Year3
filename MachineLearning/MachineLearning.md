@@ -199,4 +199,92 @@ Ví dụ về Bayes Theorem: Tính xác suất của một lá bài Queen đư�
 - With Bayes Theorem:
 $$P(Queen|Face) = \frac{P(Face|Queen) \times P(Queen)}{P(Face)} = \frac{1 + \frac{4}{52}}{\frac{12}{52}} = \frac{1}{3}$$
 
+## Bayes Theorem for Naive Bayes Classifier
+
+Bài toán như sau:
+- Features: $\{ x_1, x_2, ..., x_n\}$ 
+- Classes: $\{ C_1, C_2, ..., C_3\}$ 
+Mục tiêu: Tính xác suất điều kiện của một data sample mới với các feature $\{x_1, ..., x_n\}$ thuộc vào class $C_i$ nào
+
+$$P(C_i|x_1, x_2, ..., x_n) = \frac{P(x_1, x_2, ..., x_n|C_i) \times P(C_i) }{P(x_1, x_2, ..., x_n)},  \forall 1 \leq i \leq k$$
+trong đó: $P(x_1, x_2, ..., x_n) = P(x_1 \cap x_2 \cap ... \cap x_n)$ 
+
+Thực tế, việc collect dữ liêu cho $P(x_1, ..., x_n|C_i)$ và $P(x_1, ..., x_n)$ rất khó khăn. Do đó, chúng ta sẽ sử dụng các feature độc lập với nhau.
+Khi đó, $$P(A, B) = P(A) \times P(B)$$ nếu $A, B$ độc lập.
+Suy ra: $P(A,B|C) = P(A|C) \times P(B|C)$ 
+
+Suy ra $$P(C_i|x_1, x_2, ..., x_n) = \frac{P(x_1, x_2, ..., x_n|C_i) \times P(C_i) }{P(x_1, x_2, ..., x_n)} = \frac{P(C_i) \prod_{m=1}^{n}P(x_m|C_i)}{P(x_1, ..., x_n)}$$
+Và class ta cần tìm sẽ là: 
+
+$$class = \text{argmax}_{C_i} P(C_i) \prod_{m=1}^{n}P(x_m|C_i)$$
+## Ví dụ
+
+***(Lưu ý: Phần tính toán có ra thi)***
+
+Đề bài: 
+![[example_hand_calculate_NB.jpg]]
+
+Đếm các feature theo bảng bên phải chia cho số lượng data sample
+
+![[example_hand_calculate_NB (1).jpg]]
+
+Sau đấy, dùng công thức Bayes, tính ra xác suất đi chơi (hoặc không đi chơi) dựa vào feature của một data sample mới
+
+![[example_hand_calculate_NB (2).jpg]]
+
+Suy ra: 
+$$P(Yes|x') = 0.0053 < 0.0206 = P(No|x')$$
+Suy ra Label của $x'$ là **No**
+
+## Gaussian Naive Bayes
+
+Đây là phần dành cho các feature liên tục (Continuous-valued Features). Ví dụ: Nhiệt độ, áp suất, lượng mưa theo giờ,...
+
+Ta sẽ sử dụng công thức xác suất tuân theo phân phối chuẩn là 
+
+$$P(x_i|y) = \frac{1}{\sqrt{2\pi \sigma^2_y}} \times \text{exp}(\frac{-(x_i - \mu_y) ^ 2}{2 \sigma ^2 _y})$$
+![[example_contiuous_value_NB.jpg]]
+
+## Laplace Smoothing
+
+Đây là phương pháp giúp tránh trường hợp trong quá trình training, chúng ta tính xác suất bằng 0 với một thuộc tính nhất định, từ đó dẫn đến khi áp dụng công thức Bayes sẽ ra bằng 0 trong mọi data sample mới có cùng thuộc tính. Gây ra tình trạng **overfitting**
+
+Các fix như sau: 
+
+Với $P(X=x_i|C=c_j) = \frac{m_i}{n_j}$
+
+Thì ta sẽ: $$P(X=x_i|C=c_j) = \frac{m_i + 1}{n_j + |values(X)|}$$
+với 
+- $m_i$ là số data sample có giá trị $x_i$ tại thuộc tính $X$ và thuộc lớp $c_j$ 
+- $n_j$ là số lượng data sample thuộc lớp $c_j$ 
+- $|values(X)|$ là số lượng unique value tại feature $X$ 
+
+## Log-probability
+
+Trong thực tế, việc các xác suất rất nhỏ xảy ra là chuyện bình thường và trong công thức ta rút ra ở trên, ta phải nhân chúng lại với nhau, gây ra hiện tương underflow. Dẫn đến máy tính không thể tính toán chính xác các giá trị này và gây ra hiện tương sai số.
+
+Do đó, ta cần biến đổi công thức xác định class một chút:
+
+$$class = \text{argmax}_{C_i} P(C_i) \prod_{m=1}^{n}P(x_m|C_i) =
+\text{argmax}_{C_i} \log P(C_i) + \sum_{m=1}^{n}\log P(x_m|C_i)$$
+
+## Summary
+
+Ưu điểm: 
+- Train nhanh
+- Predict nhanh
+- Không nhạy cảm với các đặc trưng không liên quan
+- Xử lý tốt với cả dữ liệu liên tục và rời rạc
+- Xử lý tốt với streaming data
+- Tính giải thích rất tốt
+Nhược điểm: 
+- Chỉ hoạt động tốt với các feature độc lập lẫn nhau
+
+# Decision Tree & Random Forest
+
+#AI/MachineLearning/Classification 
+#AI/MachineLearning/Regression 
+#AI/MachineLearning/SupervisedLearning 
+#AI/Algorithm 
+#DataMining/FeatureExtraction
 
