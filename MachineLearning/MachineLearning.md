@@ -280,7 +280,7 @@ $$class = \text{argmax}_{C_i} P(C_i) \prod_{m=1}^{n}P(x_m|C_i) =
 Nhược điểm: 
 - Chỉ hoạt động tốt với các feature độc lập lẫn nhau
 
-# Decision Tree & Random Forest
+# Lecture 4: Decision Tree & Random Forest
 
 #AI/MachineLearning/Classification 
 #AI/MachineLearning/Regression 
@@ -288,3 +288,158 @@ Nhược điểm:
 #AI/Algorithm 
 #DataMining/FeatureExtraction
 
+Decision Tree là thuật toán dựa vào cấu trúc cây.
+
+```{code}
+node = Root 
+examples = Training Set 
+Split ( node, {examples} ): 
+	1. Find A, the best attribute for splitting the {examples} 
+	2. Create decision nodes for attribute A (i.e., child nodes 
+	of node) 
+	3. Split training {examples} to child nodes 
+	4. If examples perfectly classified (subset is pure): 
+			STOP 
+		else: iterate over new child nodes 
+			Split (child_node, {subset of examples} )
+```
+
+Giải nghĩa *"subset is pure"*: 
+
+![[example_puresubset.jpg]]
+
+Như hình vẽ, ta thấy việc chọn Outlook feature tạo ra một nhánh đi theo value Overcast giúp predict một cách hoàn hảo (completely certain 100%). Suy ra Outlook là pure subset
+
+## Entropy
+$$H(S) = -(p_{(+)} \log p_{(+)} + p_{(-)} \log p_{(-)})$$
+- Impure (3 yes / 3 no)
+	$$H(S) = - \frac{3}{6} \log{\frac{3}{6}} - \frac{3}{6} \log{\frac{3}{6}} = 1$$
+- Pure (4 yes / 0 no) 
+	$$H(S) = - \frac{4}{4} \log{\frac{4}{4}} - \frac{0}{4} \log{\frac{0}{4}} 0$$
+## Information Gain
+
+Đây là công thức giúp xác định xem đâu là feature phù hợp nhất để làm node
+
+$$Gain(S, A) = H(S) - \sum_{V \in Values(A)} \frac{|S_v|}{|S|} H(S_v)$$
+Ví dụ; 
+
+```mermaid
+flowchart
+	root["9 yes / 5 no \n Wind"] --> node1["6 yes / 2 no \n Weak "] & node2["3 yes / 3 no \n Strong"]
+```
+
+$$Gain(S, Wind) = H(S) - \frac{8}{14} H(S_{Weak}) - \frac{6}{14} H(S_{Strong})$$$$= 0.94 - \frac{8}{14}*0.81 - \frac{6}{14}*1 = 0.049$$
+Ta sẽ chọn feature nào có gía trị $Gain(S, A)$ cao nhất
+
+Có một vấn đề khá lớn với với Information Gain là: 
+
+![[problem_gain.jpg]]
+Để tránh tình trạng này xảy ra, ta sẽ sử dụng GainRatio
+
+$$SplitEntropy(S,A) = - \sum_{V \in Values(A)} \frac{|S_v|}{|S|} \log \frac{|S_v|}{|S|}$$
+$$GainRatio(S, A) = \frac{Gain(S, A)}{SplitEntropy(S,A)}$$
+## Avoid Overfitting for Decision Tree
+1. Dừng việc phát triền cây khi dữ liệu bị split không còn ý nghĩa
+2. Loại bỏ các thuộc tính không liên quan
+3. Sử dụng Post-prunning 
+
+Post-prunning cho phép cây phân loại hoàn toàn tập huấn luyện rồi mới cắt tỉa
+
+Pre-prunning dừng việc phát triển cây sớm hơn, trước khi nó hoàn toàn phân chia tập dữ liệu 
+
+
+## Continuous Variables
+
+Các bước để xử lý trường hợp biến liên tục 
+1. Sort value of feature, kể cả class labels
+2. Chọn cut point (sử dụng information gain để chọn) 
+
+Ví dụ: 
+
+![[example_contiuous_value_DT.jpg]]
+
+
+## Multi-class Classification
+
+Sử dụng công thức Entropy cho Multi-class
+
+$$H(S) = - \sum_{c} p_c \log (p_c)$$
+
+## Random Forest
+
+Training: grow K different decision trees:
+- Pick a random subset $S_{random}$ of training examples.
+- Grow a full decision tree (no pruning), compute
+information gain based on $S_{random}$ instead of full set.
+- Repeat for K decision trees.
+
+Inference: given a new data point X:
+- Classify X using each of the K trees.
+- Use majority vote: class predicted most often.
+
+Fast, scalable, state-of-the-art performance.
+
+## Gini impurity 
+
+### 1. Gini impurity of a dataset
+
+$$Gini(D) = \sum_{i=1}^{k} p_i(1-p_i) = 1 - \sum_{i=1}^k p_i^2$$
+![[gini_dataset.jpg]]
+
+$Gini = 0 \implies$ **Pure**
+$Gini = 0.5 \implies$ **Equal**
+$Gini = 1 \implies$ **Random**
+
+2. Gini impurity of an attribute
+
+$$Gini_A(D) = \sum_{s=1}^{m} \frac{|D_s|}{|D|} Gini(D_s)$$
+Chọn attribute có Gini impurity bé nhất để chia
+
+![[gini_attribute.jpg]]
+
+3. Gini information gain
+
+$$\Delta Gini(A) = Gini(D) - Gini_A(D)$$
+Chọn attribute có Gini information gain cao nhất để split
+
+$$\Delta Gini(Outlook) = 0.459 - 0.343 = 0.116$$
+$$\Delta Gini(Wind) = 0.459 - 0.429 = 0.03$$
+=> Outlook is chosen
+
+## Regression Tree
+
+Idea: Tìm best point để split dataset thành 2 phân sao cho MSE nhỏ nhất tại điểm đó
+
+Steps: 
+1. **Sort** data dựa vào feature 
+2. **Brute-force** tất cả các điểm có thể chia, tính MSE
+3. **Choose** minimum MSE, từ đó chọn được best point
+
+![[example_MSE_regressionTree.jpg]]
+
+## Feature Importance - A single decision tree
+
+Idea: Tính số điểm "importance" của từng data feature. Điểm càng cao thì độ ảnh hưởng của feature đó càng lớn
+
+$$I_i = \sum_{i_n = i} [p(n) purity(n) - \sum_{n_{child}} p(n_{child}) purity(n_{child})]$$
+
+$purity(n)$ ở đây có thể dùng Entropy, Gini hay Squared Error để tính 
+
+Ví dụ:
+![[feature_import_DT.jpg]]
+
+$$\text{satisfaction\_level} = \frac{18282}{18282} *1 - \frac{7831}{18282} * 0.649 - \frac{10451}{18282}*0.811 = 0.2584$$
+$$\text{time\_spend\_company} = (\frac{7831}{18282}*0.649 - \frac{7129}{18282}*0.508 - \frac{702}{18282}*0.866) $$$$ + (\frac{10451}{18282}*0.811 - \frac{7242}{18282}*0.221 - \frac{3209}{18282}*0.835) = 0.2761$$
+
+Tương tự cho Gini, chỉ cần thay đổi giá trị $purity(n)$ 
+
+## Feature Importance - Random Forest
+
+Idea: Tính điểm Importance of Feature I trên từng cây đơn rồi cộng lại chia số cây.
+
+$$I_i = \frac{1}{|B|} \sum_{T \in B} I_i(T)$$
+
+# Lecture 5: K-Means Clustering 
+
+#AI/MachineLearning/UnsupervisedLearning 
+#AI/MachineLearning/Clustering
