@@ -178,7 +178,6 @@ Tương tự như Linear Regression, ta cũng thêm đại lượng $\lambda \su
 
 #Statistic/BayesTheorem
 #AI/MachineLearning/Classification 
-#AI/MachineLearning/NaiveBayes
 #AI/MachineLearning/SupervisedLearning 
 
 ![[naivebayes_pipeline.jpg]]
@@ -443,3 +442,163 @@ $$I_i = \frac{1}{|B|} \sum_{T \in B} I_i(T)$$
 
 #AI/MachineLearning/UnsupervisedLearning 
 #AI/MachineLearning/Clustering
+
+## Unsupervised Learning
+
+Dữ liệu đầu vào chỉ có các feature ($\overline{X}$), không hề có label ($Y$) như supervised learning
+
+Advantage: không cần mất thời gian và tiền bạc để đánh nhãn dữ liệu
+
+Challenge: mục tiêu không còn đơn giản chỉ là predict 
+
+Ví dụ: Phân loại bệnh theo biểu hiện gene, chia nhóm người mua sắm dựa vào các đặc trưng mua hàng, ....
+
+## Clustering 
+
+Clustering là kỹ thuật tìm **subgroups** in a dataset. Mục tiêu là chia dữ liệu thành các tập riêng biệt dựa vào đặc trưng của từng data sample. 
+
+Từ đó đưa ra kết luận là 2 hay nhiều data sample là giống hay khác nhau dựa trên mục đích
+
+![[ex_clustering.jpg]]
+
+## K-Means Clustering
+
+### Định nghĩa
+
+$C_1, ..., C_k$ là các cluster, chúng được xác định dựa vào 2 điều kiện sau:
+1. $C_1 \cup C_2 \cup ... \cup C_k = \{ 1, ..., n\}$ (tức bất kỳ data sample nào cũng thuộc 1 cluster)
+2. $C_k \cap C_{k'} \ = \varnothing, \forall k \ne k'$, (tức ko cluster nào bị overlap)
+For instance, một data sample thuộc về 1 cluster
+
+### Mục tiêu
+
+K-Means clustering càng tốt khi **within-cluster variation** càng nhỏ. 
+$WCV(C_k)$ là giá trị khoảng cách của các data sample thuộc cùng 1 cluster. 
+
+Suy ra, mục tiêu của K-Means Clustering là 
+
+$$\rm minimize \{ \sum_{i=1}^k WCV(C_i) \}$$
+Nếu chúng ta sử dụng công thức khoảng cách là Euclidean thì 
+
+$$WCV(C_k) = \frac{1}{|C_k|} \sum_{i, i' \in C_k} \sum_{j=1}^p (x_{ij} - x_{i'j})^2$$
+Với $|C_k|$ là số lượng data sample (hay observations) trong 1 cluster thứ $k$
+
+### Thụât toán
+
+1. Random đánh số cluster cho từng observation từ 1 đến $k$
+2. Lặp cho tới khi các cluster không còn thay đổi
+	2.1. Với mỗi $k$ clusters, tìm centroid. Centroid của cluster là vector các trung bình cộng các feature thuộc về observation (quan sát) trong cluster 
+	2.2. Đánh số cluster của observation dựa vào khoảng cách ngắn nhất đến centroid của từng cluster.
+
+### Chọn $k$ cho phù hợp
+
+- Áp dụng thụât toán cho các giá trị $k$ khác nhau, ví dụ: 1 đến 10
+- Với mỗi $k$, tính $WCV$
+- **Plot the curve** của $WVC$ so với $k$
+- Chọn $k$ là điểm có sự giảm ở lần tiếp theo không đáng kể so với lần giảm trước đó. 
+
+![[elbow_kmeans.jpg]]
+
+## Hierarchical Clustering
+
+Khác với K-Means Clustering, thuật toán Hierarchical Clustering cần phải xác định giá trị $k$ trước. Đây có thể là một nhược điểm
+
+Trong section này, ta sẽ tìm hiểu **bottom-up** hoặc **agglomerative clustering** 
+
+### Thuật toán
+
+1. Set từng điểm là một cluster riêng biệt
+2. Xác định cặp cluster gần nhất và merge chúng
+3. Lặp lại cho tới khi toàn bộ điểm thuộc về một cluster
+
+![[ex_hierarchical.jpg]]
+
+Sau đó, ta chọn $k$ phù hợp bằng cách kẻ một đường trên dendogram
+
+![[ex_dendogram.jpg]]
+
+### Linkage
+
+Ta sẽ tìm hiểu cách để tính khoảng cách của các cluster. Bởi vì một cluster sẽ có nhiều point nên sẽ có nhiều cách tính chẳng hạn như: 
+
+ - Single Link
+
+![[single_link.jpg]]
+
+- Complete link
+
+![[complete_link.jpg]]
+
+- Average link
+
+![[average_link.jpg]]
+
+- Centroid link
+
+![[centroid_link.jpg]]
+
+Cùng so sánh 4 loại linkage nhé
+
+![[compare_linkage.jpg]]
+
+**Lưu ý**: xác định khoảng cách giữa các cluster xong rồi mới dựa vào khoảng cách đó để tìm đâu là cluster nào gần nhất (khoảng cách vừa tính được nhỏ nhất). Tránh nhầm lẫn
+
+# Lecture 06: Support Vector Machine (SVM)
+
+#AI/MachineLearning/Classification 
+#AI/MachineLearning/SupervisedLearning 
+
+
+## Introduce
+
+Đây là thuật toán Classification (Supervised Learning), và sẽ đi tìm global optimum (not a local optimum)
+
+SVM là một trong những model hiệu quả nhất về classification problem. Đặc biệt, model xử lý binary classification (về multiclass thì sử dụng phương pháp One-vs-All)
+
+![[ex_svm.jpg]]
+
+Nhìn vào hình, ta có thể thấy ko chỉ đường kẻ ấy là đường duy nhất có thể chia tách dữ liệu. Thế thì đường nào mới là đường tối ưu
+
+![[svm_line_optimal.jpg]]
+
+Các training sample nằm trên đường biên (margin line) được gọi là **support vectors** nhằm định hướng optimal hyperplane (siêu phẳng tối ưu)
+
+Optimal hyperplane là hyperplane có  khoảng cách giữa margin line lớn nhất 
+
+Gọi $M$ là khoảng cách giữa hai margin line. 
+Chọn $x^-$ sao cho $f(x^-) = -1$, $x^+$ sao cho $f(x^+) = 1$
+
+Suy ra ta có 
+$$\begin{cases} wx^+ + b = 1 \\ wx^- + b = -1 \end{cases}$$
+
+$$\implies w(x^+ - x^-) = 2 \implies M = \frac{2}{||w||}$$
+
+Suy ra $$\rm argmax M = argmax \frac{2}{||w||} = argmin \frac{||w||}{2} = argmin \frac{1}{2} ||w||^2$$ với ràng buộc $$\begin{cases} y^{(i)} = 1 \to wx^{(i)} + b \geq 1 \\ y^{(i)} = -1 \to wx^{(i)} + b \leq -1 \end{cases}$$
+
+Suy ra: 
+
+$$\rm argmin \frac{1}{2} ||w||^2 \quad \text{with constraint} \quad y^{(i)}(wx^{(i)} + b) \geq 1$$
+
+## Exercise: Optimization Problem
+
+Find $\text{argmin} f(x, y) = x^2 + y^2$ với $g(x, y) = x+y=1$ 
+
+*High school Solution*
+
+$y = 1-x \implies f(x) = x^2 + (1-x)^2 = 2x^2 - 2x + 1$
+
+$$f'(x) = 4x - 2 = 0 \implies x = \frac{1}{2} = y$$
+
+*University Solution*
+
+Ta sẽ sử dụng nhân tử Lagrange 
+$$\begin{cases} \nabla f(X) = \sum_{i=1}^n \lambda_i \nabla g_i(X) \\ g_i(X) = k_i \end{cases}$$
+
+$$\begin{cases} \nabla f(x, y) = \lambda \nabla g(x, y) \\ x + y = 1 \end{cases}$$
+$$\implies \begin{cases} \Big< \frac{\partial f}{\partial x} , \frac{\partial f}{\partial y}\Big> = \Big< \lambda \frac{\partial g}{\partial x} , \lambda \frac{\partial g}{\partial y}\Big> \\ x + y = 1 \end{cases}$$
+$$\implies \begin{cases} \Big< 2x, 2y \Big> = \Big< \lambda,  \lambda \Big> \\ x + y = 1 \end{cases}$$
+$$\implies \begin{cases} x = \frac{\lambda}{2} \\ x = \frac{\lambda}{2} \\ x + y = 1 \end{cases}$$
+$$\implies \begin{cases} x = \frac{1}{2} \\ y = \frac{1}{2} \\ \lambda = 1 \end{cases}$$
+$$\implies f_{min}(\frac{1}{2}, \frac{1}{2}) = \frac{1}{2}$$
+## Karush-Kuhn-Tucker (KTT, inequality constraint)
+
