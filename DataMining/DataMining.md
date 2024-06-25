@@ -205,9 +205,7 @@ Hai thử thách với dòng dữ liệu lớn:
 #DataMining/DataPreprocessing/FeatureExtraction 
 #DataMining/DataPreprocessing/DataCleaning
 #DataMining/DataPreprocessing/Normalization
-#DataMining/Algorithm/PCA
-#DataMining/Algorithm/SVD
-#DataMining/Algorithm/LSA
+#DataMining/DataPreprocessing/Reduction
 
 ## 2.1. Introduction
 
@@ -249,90 +247,157 @@ Bảng các thuật toán để biến đổi dữ liệu
 #### 1. Discretization: rời rạc hóa
 #### 2. Binarization: nhị phân hóa
 #### 3. LSA: *đề cập sau*
-#### 4. SAX: *copy GPT*
+#### 4. SAX, DWT (Discrete Wavelet Transform), DFT (Discrete Fourier Transform): [link chatgpt](https://chatgpt.com/share/4cc2a243-6f4a-46ac-9336-146373efdf01)
 
-Symbolic Aggregate approXimation (SAX) là một thuật toán được sử dụng để biến đổi dữ liệu chuỗi thời gian (time-series) sang dạng chuỗi rời rạc (discrete sequence). Dưới đây là các bước cơ bản của thuật toán SAX:
-1. **Z-normalization**: Chuỗi thời gian ban đầu được chuẩn hóa để có giá trị trung bình bằng 0 và độ lệch chuẩn bằng 1. Điều này giúp loại bỏ ảnh hưởng của mức độ lớn của dữ liệu và chỉ tập trung vào hình dạng của chuỗi.
+## 2.3. Data Cleaning
 
-2. **Piecewise Aggregate Approximation (PAA)**: Chuỗi thời gian chuẩn hóa được chia thành các phân đoạn có độ dài bằng nhau. Giá trị trung bình của mỗi phân đoạn được tính toán để tạo thành một chuỗi mới có độ dài ngắn hơn.
+- Xử lý dữ liệu bị thiếu 
+	- Loại bỏ
+	- Sử dụng phương pháp uớc lượng hoặc điền khuyết
+	- Dùng các thuật toán được thiết kế để hoạt động với dữ liệu bị thiếu
+- Xử lý dữ liệu sai
+	- Phát hiện sự không đồng nhất
+	- Sử dụng kiến thức chuyên môn
+	- Các phương pháp tập trung dữ liệu. Ví dụ: dùng các đặc tính thống kê của dữ liệu để lọc ngoại lai
+- Scale và chuẩn hóa dữ liệu
+	- Standardization
+	- Min-max scaling
+	- ...
 
-3. **Discretization**: Các giá trị của chuỗi PAA được ánh xạ sang các ký hiệu rời rạc dựa trên các ngưỡng được xác định trước. Thông thường, ngưỡng này được xác định bằng cách sử dụng phân phối Gaussian chuẩn.
+## 2.4. Data Reduction and Transformation
 
-Chi tiết từng bước:
+### 2.4.1. Data Sampling
 
-1. Z-normalization
-Cho một chuỗi thời gian $( X = [x_1, x_2, ..., x_n] )$, chúng ta tính toán giá trị trung bình $\mu$ và độ lệch chuẩn $( \sigma )$ của nó:
-$[ \mu = \frac{1}{n} \sum_{i=1}^n x_i ]$
-$[ \sigma = \sqrt{\frac{1}{n} \sum_{i=1}^n (x_i - \mu)^2} ]$
+Lợi thế của lấy mẫu dữ liệu là sự đơn giản, trực quan và dễ thực hiện
 
-Chuỗi thời gian chuẩn hóa được tính bằng:
-$[ X' = \left[ \frac{x_1 - \mu}{\sigma}, \frac{x_2 - \mu}{\sigma}, ..., \frac{x_n - \mu}{\sigma} \right] ]$
+Có 2 cách thức lấy mẫu dữ liệu
+1. **Lấy mẫu cho dữ liệu tĩnh (static data)**
+	
+	Với lấy mẫu cho dữ liệu tĩnh. Khi toàn bộ dữ liệu đã có sẵn và từ đó số điểm dữ liệu gốc được biết thì việc lấy mẫu đơn giản hơn. 
+	
+	Với cách lấy mẫu không chệch (unbiased sampling)
+	một tỉ lệ dữ liệu được định trước và giữ nguyên trong suốt quá trình phân tích. Có hai cách như sau: 
+	* **Lấy mẫu không hoàn lại (without replacement):** Các bản ghi `n * f` được chọn ngẫu nhiên từ tập dữ liệu *D* chứa các bản ghi *n*, trong đó *f* biểu thị tỷ lệ các điểm dữ liệu sẽ được đưa vào mẫu. Phương pháp này ngăn không cho cùng một bản ghi được đưa vào nhiều lần trừ khi tập dữ liệu gốc chứa các bản sao.
+	* **Lấy mẫu có hoàn lại (with replacement):** Các bản ghi được lấy mẫu tuần tự và độc lập với tập dữ liệu *D* chứa các bản ghi *n* với tổng số `n * f` lần. Phương pháp này cho phép đưa cùng một bản ghi vào mẫu nhiều lần.
+	
+	Ngoài kiểu unbiased sampling, chúng ta còn một số loại lấy mẫu khác: 
+	- **Lấy mẫu chệch (Biased Sampling)**: Do một số phần dữ liệu quan trọng hơn, được đánh giá cao hơn trong phần lấy mẫu dựa vào tầm quan trọng của chúng trong quá trình phân tích
+	- **Lấy mẫu phân tầng (Stratified Sampling)**: Dữ liệu trước tiên sẽ chia thành các nhóm, sau đó lấy mẫu một số điểm dữ liệu xác định trước từ mỗi tầng. 
 
-2. Piecewise Aggregate Approximation (PAA)
-Chia chuỗi thời gian chuẩn hóa $( X' )$ thành $( w )$ phân đoạn bằng nhau, mỗi phân đoạn có chiều dài $( \frac{n}{w} )$. Giá trị trung bình của mỗi phân đoạn được tính để tạo thành chuỗi PAA $( \overline{X} )$:
-$[ \overline{X}_i = \frac{w}{n} \sum_{j=(i-1)\frac{n}{w}+1}^{i\frac{n}{w}} X'_j]$
 
-3. Discretization
-Chia phân phối chuẩn thành \( a \) khoảng, mỗi khoảng đại diện cho một ký hiệu rời rạc. Dựa vào số lượng ký hiệu \( a \), chúng ta xác định các ngưỡng \( \beta \) từ phân phối chuẩn sao cho:
-$[ P(\beta_{i-1} \leq X < \beta_i) = \frac{1}{a} ]$
+2. **Lấy mẫu reservoir cho dòng dữ liệu**
+	
+	Các dòng dữ liệu thường ko kích thước cố đinh mà liên tục có các điểm dữ liệu mới. Với cách lấy mẫu này, một mẫu với *k* điểm cho trước được duy trì một cách linh động từ dòng dữ liệu. 
+	
+	Do kích thước rất lớn của một dòng dữ liệu, chúng ta cần các bước xử lý để duy trì tập mẫu *k* điểm với mỗi điểm dữ liệu mới từ dòng.
+	
+	Với mỗi điểm dữ liệu mới, chúng ta có 2 quyết định sau:
+	- Luật lấy mẫu nào để quyết định xem điểm dữ liệu mới có được cho vào mẫu hay không
+	- Luật nào để quyết định xem một điểm dữ liệu cũ trong mẫu có bị bỏ ra để có chỗ cho điểm dữ liệu mới
+	
+	Với một reservoir kích thước *k* điểm dữ liệu, chúng ta sẽ lấy *k* điểm đầu tiên trong dòng dữ liệu để khởi tạo reservoir. 
+	
+	Sau đó, với điểm dữ liệu thứ *n* từ dòng, chúng ta có 2 quyết định điều khiển sau: 
+	- Cho điểm thử n vào reservoir với xác xuất *k/n*. 
+	- Nếu điểm dữ liệu mới được cho vào thì loại bỏ một trong *k* điểm dữ liệu cũ một cách ngẫu nhiên.
 
-Cuối cùng, ánh xạ giá trị trung bình của mỗi phân đoạn PAA sang các ký hiệu rời rạc dựa trên các ngưỡng đã xác định.
- 
-#### 5. DWT (Discrete Wavelet Transform): *copy GPT*
 
-Discrete Wavelet Transform (DWT) là một phương pháp phân tích tín hiệu mà nó chuyển đổi dữ liệu chuỗi thời gian thành một dạng biểu diễn khác dễ dàng hơn cho việc phân tích và xử lý. DWT đặc biệt hữu ích trong việc nén dữ liệu, phát hiện các tính năng trong dữ liệu, và giảm nhiễu.
 
-### Các bước cơ bản của DWT:
+### 2.4.2. Feature Selection
 
-1. **Chọn Wavelet mẹ (Mother Wavelet)**:
-   - Một wavelet mẹ là một hàm toán học được sử dụng để phân chia dữ liệu thành các thành phần tần số khác nhau. Có nhiều loại wavelet mẹ khác nhau như Haar, Daubechies, Coiflets, Symlets, v.v.
+Một cách khác để rút gọn dữ liệu là loại bỏ đi các đặc trưng không quan trọng. 
+Chỉ lựa chọn các subset of features từ dữ liệu để sử dụng. Cách chọn subset tùy theo riêng từng application
 
-2. **Phân tích đa độ phân giải (Multiresolution Analysis)**:
-   - DWT phân chia tín hiệu thành các thành phần tần số khác nhau ở các độ phân giải khác nhau. Nó làm điều này bằng cách áp dụng các bộ lọc thông thấp (low-pass filter) và bộ lọc thông cao (high-pass filter).
+Có 2 phương pháp chính trong việc feature selection: 
+1. Unsupervised feature selection: *đề cập ở chương Data Clustering*
+2. Supervised //: *đề cập ở chương Data Classification*
 
-3. **Phân rã tín hiệu (Signal Decomposition)**:
-   - Tín hiệu ban đầu được chia thành hai phần: thành phần chi tiết (detail coefficients) và thành phần xấp xỉ (approximation coefficients). Các thành phần này được tính toán bằng cách sử dụng các wavelet mẹ đã chọn.
+### 2.4.3. Data reduction with axis rotation (Giảm chiều bằng phép xoay trục)
 
-4. **Tái cấu trúc tín hiệu (Signal Reconstruction)**:
-   - Từ các thành phần chi tiết và xấp xỉ, chúng ta có thể tái cấu trúc lại tín hiệu ban đầu mà không mất thông tin. Quá trình này sử dụng các bộ lọc tương tự để ghép nối lại các thành phần tần số.
+Trong dataset thực tế thường tồn tại các tương quan giữa các feature khác nhau và chúng thường không chặt chẽ và xác định một cách thủ công. 
 
-### Chi tiết từng bước:
+Từ các ràng buộc và tương quan trên, một số thông tin từ một chiều có thể dùng để dự đoán thong tin của các chiều khác.
 
-#### 1. Chọn Wavelet mẹ:
-   - Ví dụ, chúng ta chọn wavelet Haar.
+1. **PCA (Principal Component Analysis)**: Mục tiêu của PCA là xoay dữ liệu về một hệ trục sao cho lượng phương sai lớn nhất có thể được biểu diễn bởi một số chiều nhỏ nhất. Phương sai của một tập dữ liệu theo một hướng cụ thể có thể được thể hiện thông qua ma trận phương sai của dữ liệu. Có thể chứng minh được ma trận phương sai là đối xứng, nửa xác định dương. Từ đó, ma trận này chéo hóa được và các trị riêng của ma trận phương sai biểu diễn phương sai của dữ liệu dọc theo vectors riêng tương ứng. Do đó các vectors riêng với trị riêng lớn sẽ thể hiện phương sai lớn hơn và được gọi là các principal component, các trục chính mới chúng ta dùng để biểu diễn dữ liệu.
+2. **SVD (Singular value decomposition)**: SVD có quan hệ gần với PCA. SVD có 2 bộ vector cơ sở thay vì 1 như PCA. SVD cho cùng vector cơ sở với PCA nêu các thuộc tính của dữ liệu có trung bình là 0
+3. **LSA (Latent Semantic Analysis)**: là một ứng dụng của SVD với dữ liệu văn bản. Với dữ liệu văn bản, mỗi dòng của ma trận dữ liệu ứng với mỗi văn bản trong dữ liệu và chứa tần suất xuất hiện của mỗi từ của văn bản đó. Do đây là ma trận thưa nên trung bình của mỗi cột rất gần 0, điều này dẫn đến kết quả khá gần với PCA, mặc dù không sử dụng mean centering. Tính thưa của ma trận cũng dẫn đến số chiều nội tại thấp, điều này cũng dẫn đến việc giảm số chiều bằng LSA có thể rất mạnh.
 
-#### 2. Phân tích đa độ phân giải:
-   - Tín hiệu \( x[n] \) được chia thành hai tín hiệu con: một thông thấp \( c[n] \) và một thông cao \( d[n] \).
+Ngoài giảm chiều dữ liệu và nén dữ liệu thì PCA và SVD còn các ứng dụng khác như: Khử nhiễu, điền khuyết, giải hệ tuyến tính, nghịch đảo ma trận, ...
 
-#### 3. Phân rã tín hiệu:
-   - Sử dụng bộ lọc thông thấp \( h[n] \) và bộ lọc thông cao \( g[n] \):
-     \[ c[n] = \sum_{k} x[k] h[2n - k] \]
-     \[ d[n] = \sum_{k} x[k] g[2n - k] \]
+Ví dụ và cách tính chi tiết của PCA, SVD, LSA, tham khảo [link gpt](https://chatgpt.com/share/e96603d4-7b3d-46a9-ab28-aa20339ae961)
 
-   - Trong đó, \( h[n] \) là bộ lọc thông thấp và \( g[n] \) là bộ lọc thông cao.
+### 2.4.3. Data reduction with type transformation
 
-#### 4. Tái cấu trúc tín hiệu:
-   - Từ các hệ số chi tiết và xấp xỉ, chúng ta có thể khôi phục lại tín hiệu ban đầu:
-     \[ x[n] = \sum_{k} (c[k] h[2k - n] + d[k] g[2k - n]) \]
+Với các phương pháp này thì việc rút giảm dữ liệu đi kèm với biến đổi kiểu dữ liệu. Thông thường thì dữ liệu sẽ được biến đổi từ một kiểu phức tạp về một kiểu ít phức tạp hơn.
 
-### Ví dụ minh họa:
+Ta sẽ tìm hiểu hai phương pháp là 
+1. Time-series to multidimensional using Haar Wavelet Transform: Chúng ta có thể dùng kĩ thuật wavelet để khai triển một time series thành các vector cơ sở wavelet có trọng số. Mỗi trọng số này thể hiện độ biến thiên của time series giữa 2 nửa của một khoảng thời gian. Trong ứng dụng giảm số chiều, các hệ số lớn (sau khi chuẩn hóa) sẽ được giữ lại.
+2. Weighted Graphs to multidimensional using multidimensional scaling and Spectral methods
+Xem thêm tại [link chatgpt](https://chatgpt.com/share/1f3cef73-5461-4b47-941f-0c28e155b13a)
 
-Giả sử chúng ta có một chuỗi thời gian đơn giản:
-\[ x = [4, 6, 10, 12, 14, 16, 18, 20] \]
+# 3. Similarity and Distances
 
-1. **Chọn Wavelet mẹ**:
-   - Wavelet Haar.
+#DataMining/Similarity
+#DataMining/Distances
 
-2. **Phân tích đa độ phân giải**:
-   - Áp dụng bộ lọc thông thấp và thông cao:
-     \[ c[n] = \left[ \frac{4 + 6}{\sqrt{2}}, \frac{10 + 12}{\sqrt{2}}, \frac{14 + 16}{\sqrt{2}}, \frac{18 + 20}{\sqrt{2}} \right] \]
-     \[ d[n] = \left[ \frac{4 - 6}{\sqrt{2}}, \frac{10 - 12}{\sqrt{2}}, \frac{14 - 16}{\sqrt{2}}, \frac{18 - 20}{\sqrt{2}} \right] \]
+## 3.1. Introduction
 
-   - Kết quả sẽ là:
-     \[ c[n] = [7.07, 15.56, 21.21, 26.87] \]
-     \[ d[n] = [-1.41, -1.41, -1.41, -1.41] \]
+Trong nhiều ứng dụng khai phá dữ liệu, chúng ta cần xác định các đối tượng dữ liệu tương đồng, hoặc không tương đồng. 
 
-3. **Tái cấu trúc tín hiệu**:
-   - Từ các hệ số chi tiết và xấp xỉ, tín hiệu ban đầu có thể được tái cấu trúc.
+Việc lựa chọn hàm tương đồng (hoặc hàm khoảng cách, tùy thuộc ứng dụng) rất quan trọng trong thiết kế của các thuật toán.
 
-DWT cung cấp một công cụ mạnh mẽ để phân tích tín hiệu và dữ liệu chuỗi thời gian ở các mức độ chi tiết khác nhau, giúp phát hiện các đặc trưng quan trọng trong dữ liệu và ứng dụng trong nhiều lĩnh vực như nén dữ liệu, xử lý tín hiệu, và phát hiện dị thường.
+## 3.2. Quantitative Data
+
+Công thức khoảng cách phổ biến nhất với dữ liệu định lượng là $L_p - Norm$
+
+$$Dist(\overline{X}, \overline{Y}) = \bigg( \sum_{i=1}^d |x_i - y_i|^p \bigg) ^{1/p}$$2 giá trị *p* hay dùng nhất là *p = 1* (Euclidean) và *p = 2* (Manhattan)  
+
+### 3.2.1. Impact of Domain-Specific Relevance
+
+Do ảnh hướng về tầm quan trọng của feature này so với feature kia. Công thức $L_p - Norm$ sẽ được thêm trọng số phía trước và trở thành công thức *Minkowski*
+
+$$Dist(\overline{X}, \overline{Y}) = \bigg( \sum_{i=1}^d a_i . |x_i - y_i|^p \bigg) ^{1/p}$$
+
+### 3.2.2. Impact of High Dimensionality
+
+Rất nhiều ứng dụng khai phá dữ liệu bị mất tính hiệu quả khi số chiều của dữ liệu tăng cao. Hiện tượng này được gọi là “curse of dimensionality”.
+
+### 3.2.3. Impact of Locally Irrelevant Features
+...
+
+### 3.2.4. Impact of Different $L_p - Norm$
+
+Với các *p* lớn thì ảnh hưởng của các thuộc tính không quan trọng thường được nhấn mạnh.
+
+### 3.2.5. Match-Based Similarity Computation
+...
+
+### 3.2.6. Impact of Data Distribution
+
+Trong nhiều ứng dụng, việc tính khoảng cách còn phụ thuộc vào phân phối của dữ liệu.
+
+![[Pasted image 20240625171700.png]]
+
+Như trong hình thì đường nối tâm O đến điểm A nằm theo hướng có phương sai cao, còn đường nối tâm O đến điểm B thì có dữ liệu thưa và nằm theo hướng có phương sai thấp. Theo cách nhìn này, có thể đánh giá đoạn OB dài hơn OA. Khoảng cách Mahalanobis cũng được dựa trên nguyên lý này.
+
+$$Maha(\overline{X}, \overline{Y}) = \sqrt{(\overline{X}- \overline{Y}) \Sigma^{-1} (\overline{X}- \overline{Y})^T}$$
+
+### 3.2.7 Nonlinear Distributions: ISOMAP
+
+![[Pasted image 20240625171937.png]]
+
+Ảnh hưởng của ISOMAP đã giúp ta thấy được khoảng cách của điểm A và C là xa nhất, so với dùng khoảng cách truyền thống thì A, C là khoảng cách gần nhất
+
+Cách tính gồm 2 bước:
+1. Tính *k*-nearest neighbors của từng điểm. Xây dựng đồ thị trọng số *G* với từng node biểu thị cho các điểm dữ liệu và cạnh biểu thị khoảng cách của *k*-nearest neighbors này.
+2. Đối với bất kỳ cặp điểm X, Y nào, Dist(X,Y) là đường đi ngắn nhất giữa các nút tương ứng trong đồ thị *G*
+
+### 3.2.8. Impact of Local Data Distribution
+
+![[Pasted image 20240625172519.png]]
+
+Phân phối dữ liệu có thể thay đổi đáng kể theo từng cục bộ, dẫn tới việc tính toán có thể thay đổi
+
+Như hình vẽ 3.6a, khoảng cách giữa (A,B) và (C,D) được cho là bằng nhau (theo Euclidean) nhưng do có sự khác biệt về mật độ phân phối nên (C,D) nên được cho là lớn hơn (A,B). Điều này chứng tỏ là (C,D) nên được cho là ở xa hơn trong bối cảnh địa phương của chúng. Vấn đề này thường gặp trong các phương pháp dựa trên khoảng cách như phát hiện điểm ngoại lai và một trong những pp nổi tiếng đó là LOF (Local Outlier Factor)
+
+Đối với hình 3.6b, khoảng cách giữa (A, B) và (C, D) là giống nhau khi sử dụng metric Euclidean. Tuy nhiên, các cụm địa phương trong mỗi vùng có định hướng rất khác nhau. Trục có phương sai cao của cụm dữ liệu liên quan đến (A, B) thẳng hàng với đường từ A đến B, nhưng điều này không đúng với (C, D). Do đó, khoảng cách nội tại giữa C và D lớn hơn so với A và B. Ví dụ, nếu khoảng cách Mahalanobis địa phương được tính toán sử dụng thống kê hiệp phương sai cụm liên quan, thì khoảng cách giữa C và D sẽ lớn hơn khoảng cách giữa A và B.
