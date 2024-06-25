@@ -27,7 +27,7 @@ Types of ML (Machine Learning):
 #AI/MachineLearning/Regression 
 #AI/MachineLearning/Regularization 
 #AI/MachineLearning/SupervisedLearning 
-#DataMining/NormalizedData  
+#DataMining/DataPreprocessing/Normalization   
 ![Example of Linear Regression](example_regression.jpg)
 
 $$y = \theta _0 + \theta_1 x_1 + \theta_2 x_2 + ... + \theta_d x_d = \sum_{j=0}^{d} \theta_j x_j$$
@@ -285,7 +285,7 @@ Nhược điểm:
 #AI/MachineLearning/Regression 
 #AI/MachineLearning/SupervisedLearning 
 #AI/Algorithm 
-#DataMining/FeatureExtraction
+#DataMining/DataPreprocessing/FeatureExtraction
 
 Decision Tree là thuật toán dựa vào cấu trúc cây.
 
