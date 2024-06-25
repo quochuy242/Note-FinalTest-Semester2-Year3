@@ -314,13 +314,17 @@ Việc lựa chọn hàm tương đồng (hoặc hàm khoảng cách, tùy thu�
 Công thức khoảng cách phổ biến nhất với dữ liệu định lượng là $L_p - Norm$
 
 $$
-Dist(\overline{X}, \overline{Y}) = \bigg( \sum_{i=1}^d |x_i - y_i|^p \bigg) ^{1/p}$$2 giá trị *p* hay dùng nhất là *p = 1* (Euclidean) và *p = 2* (Manhattan)
+Dist(\overline{X}, \overline{Y}) = \bigg( \sum_{i=1}^d |x_i - y_i|^p \bigg) ^{1/p}
+$$
+
+2 giá trị _p_ hay dùng nhất là _p = 1_ (Euclidean) và _p = 2_ (Manhattan)
 
 ### 3.2.1. Impact of Domain-Specific Relevance
 
-Do ảnh hướng về tầm quan trọng của feature này so với feature kia. Công thức $L_p - Norm$ sẽ được thêm trọng số phía trước và trở thành công thức *Minkowski*
+Do ảnh hướng về tầm quan trọng của feature này so với feature kia. Công thức $L_p - Norm$ sẽ được thêm trọng số phía trước và trở thành công thức _Minkowski_
 
-$$Dist(\overline{X}, \overline{Y}) = \bigg( \sum_{i=1}^d a_i . |x_i - y_i|^p \bigg) ^{1/p}
+$$
+Dist(\overline{X}, \overline{Y}) = \bigg( \sum_{i=1}^d a_i . |x_i - y_i|^p \bigg) ^{1/p}
 $$
 
 ### 3.2.2. Impact of High Dimensionality
@@ -687,3 +691,15 @@ Mục tiêu của bài toán là xác định các liên hệ giữa các nhóm 
 mua bởi khách hàng.
 
 ## 4.2. The Frequent Pattern Mining Model
+
+Giả định CSDL _T_ chứa _n_ giao dịch $T_1, T_2, \ldots, T_n$
+
+Mỗi giao dịch $T_i$ được biểu diễn bằng một bản ghi đa chiều với độ dài $d = |U|$, trong đó $U$ là tập hợp các mục (items).
+
+Định nghĩa **Itemset**: Itemset là một tập hợp các mục. K-itemset là itemset chứa đúng k mục.
+
+Định nghĩa **Support**: Tỷ lệ giao dịch trong $T_1 ... T_n$ mà một itemset xuất hiện như một tập con cung cấp một định lượng rõ ràng về tần suất của nó. Tần suất này còn được gọi là độ hỗ trợ (support).
+
+Các mục có mối quan hệ thường xuất hiện cùng nhau trong các giao dịch, và các itemset như vậy sẽ có độ hỗ trợ cao.
+
+Định nghĩa **Frequent Itemset Mining**: Xác định tất cả các itemset $I$ xuất hiện ít nhất trong một tỷ lệ giao dịch tối thiểu minsup trong $T$.
