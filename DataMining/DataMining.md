@@ -1,10 +1,7 @@
 ![Data Mining](DataMiningFiglet.png)
 #HCMUS #DataMining
 
-
 # [Link PDF File](DataMining.pdf)
-
-
 
 # Thông tin kỳ thi
 
@@ -1095,13 +1092,13 @@ Các tham số của phân phối của mỗi thành phần hỗn hợp, chẳng
 
 Giả sử rằng hàm mật độ xác suất của thành phần hỗn hợp $G_i$ được ký hiệu là $f_i(\cdot)$. Xác suất của điểm dữ liệu $X_j$ được sinh ra từ model $M$
 
-$$f*{\text{point}}(X_j | M) = \sum*{i=1}^k \alpha_i \cdot f_i(X_j)$$
+$$f_{\text{point}}(X_j | M) = \sum_{i=1}^k \alpha_i \cdot f_i(X_j)$$
 
 Sau đó, đối với một tập dữ liệu $D$ chứa $n$ điểm dữ liệu, ký hiệu là $X_1, \ldots, X_n$, hàm mật độ xác suất của tập dữ liệu:
 
-$$f*{\text{data}}(D | M) = \prod*{j=1}^n f\_{\text{point}}(X_j | M)$$
+$$f_{\text{data}}(D | M) = \prod_{j=1}^n f_{\text{point}}(X_j | M)$$
 
-$$\implies L(D | M) = \log \left( \prod*{j=1}^n f*{\text{point}}(X*j | M) \right) = \sum*{j=1}^n \log \left( \sum\_{i=1}^k \alpha_i f_i(X_j) \right)$$
+$$\implies L(D | M) = \log \left( \prod_{j=1}^n f_{\text{point}}(X_j | M) \right) = \sum_{j=1}^n \log \left( \sum_{i=1}^k \alpha_i f_i(X_j) \right)$$
 
 Hàm log-likelihood fit này cần được tối đa hóa để xác định các tham số của mô hình.
 
@@ -1259,3 +1256,237 @@ gom nhóm.
 Ý quan trọng cần để ý ở đây là gần như tất cả kiểu dữ liệu
 đều có thể được biến đổi thành đồ thị tương đồng để thực
 hiện phân tích.
+
+Một tính chất thú vị của các thuật toán dựa theo đồ thị là các nhóm
+với hình dạng bất kì có thể được tìm ra do các đồ thị này chứa thông
+tin về khoảng cách địa phương.
+
+---
+
+Khái niệm pairwise similarity được định nghĩa thông qua neighborhood graph. Giả sử chúng ta có một tập hợp các đối tượng $O = (O_1, ..., O_n)$.
+
+Các đối tượng này thuộc bất kỳ data type nào (time-series, ....). Điều kiện quan trọng là xác định một hàm distance trên chúng.
+
+---
+
+Neighborhood Graph được xây dựng như sau:
+
+1. Định nghĩa node:
+   - Một node được định nghĩa cho một đối tượng trong $O$.
+   - Suy ra, có node set $N$, chứa $n$ nodes, với mỗi node $i$ đại diện cho $O_i$
+2. Định nghĩa edge:
+   - Một cạnh giữa $O_i, O_j$ nếu distance $Dist(O_i, O_j) < \epsilon$ (một ngưỡng xác định).
+   - Một cách khác là xác định nearest neighbor của các node, thêm một cạnh giữa chúng khi một trong hai là nearest neighbor của các còn lại.
+   - Trọng số $w_{ij}$ là một hàm kernel của distance giữa hai object sao cho weight lớn hơn thì biểu thị similarity lớn hơn. Ví dụ: (heat kernel) $w_{ij} = e^{-Dist(O_i, O_j)^2 / t^2}$.
+   - Đối với dữ liệu multidimensional, hàm distance thường là Euclid
+3. (_Optional Step_) Normalization weight of edge:
+   - Bước này có thể giúp giảm thiểu tác động của sự biến thiên mật độ cục bộ
+   - Ước lượng mật độ cục bộ (local kernel-density estimate) $deg(i) = \sum_{r=1}^n w_{ir} gần với object $O_i$
+   - Mỗi weight $w_{ij}$ sẽ được normalize bằng cách chia $\sqrt{deg(i) \cdot deg(j)}$
+   - Bước này là không cần thiết nếu thụât toán chẳng hạn như sử dụng normalized spectral clustering bởi vì nó đã sử dụng normalization method tương tự
+
+---
+
+```Copy
+Algorithm GraphMetaFramework(Data: D)
+begin
+  Construct the neighborhood graph G on D;
+  Determine clusters (communities) on the nodes in G;
+  return clusters corresponding to the node partitions;
+end
+```
+
+B1: Xây dựng neighborhood graph _G_ trên dữ liệu _D_
+B2: Sử dụng thuật toán phân cụm để xác định các cụm trên các nút trong đồ thị _G_
+B3: Trả về cluster (communities) tương ứng với nhóm còn lại _G_
+
+---
+
+## 6.8. Non-negative Matrix Factorization
+
+Đây là một kĩ thuật giảm chiều dữ liệu, trong đó các thành phần của ma trận (cần giảm chiều) phải không âm.
+
+NMF là quá trình phân tách ma trận $D$ thành tích hai ma trận không âm khác là $U, V$ sao cho $D \approx U \cdot V^T$. Trong đó, $U$ thường được gọi là ma trận cơ sở (basis matrix) và $V^T$ là ma trận hệ số (coefficient matrix).
+
+NMF được sử dụng rộng rãi trong các lĩnh vực như xử lý ảnh, xử lý tín hiệu, phân tích văn bản và sinh học hệ thống.
+
+---
+
+Các bước thực hiện thuật toán:
+
+1. Khởi tạo ma trận $U, V$ với các giá trị không âm ngẫu nhiên
+2. Cập nhật $U, V$ để minimize loss value của loss function $$J = \frac{1}{2} ||V - UV^T||^2$$ (có thể sử dụng Gradient Descent)
+3. Lặp lại bước hai cho đến khi hội tụ
+
+---
+
+So sánh với SVD, khác biệt quan trọng nhất ở đây là SVD có ràng buộc về tính trực giao với các vector cơ sở thay vì ràng buộc không âm của NMF.
+
+Đối với $D \approx Q_k \Sigma_k P^T_k$ do phân rã SVD, ma trận $Q_k \Sigma_k$ tương ứng với $U$ và $P_k$ tương ứng với ma trận $V$
+
+## 6.9. Cluster Validation
+
+Cluster validation là quá trình đánh giá chất lượng của một phân cụm đã được xác định. Sau đây là các tiêu chí để đánh giá chất lượng của phân cụm
+
+### 6.9.1. Internal Validation Criteria
+
+Tiêu chí xác thực nội bộ được sử dụng khi không có tiêu chí bên ngoài để đánh giá chất lượng phân cụm
+
+Những tiêu chí này thường được mượn trực tiếp từ hàm mục tiêu mà thuật toán phân cụm cụ thể tối ưu hóa.
+
+Các tiêu chí nội bộ phổ biến bao gồm:
+
+1. Tổng khoảng cách bình phương tới tâm cụm (Sum of square distances to centroids):
+   - Các tâm cụm được xác định và tính tổng distance. Gía trị càng nhỏ thì chất lượng càng tốt
+   - Biện pháp này tối ưu hơn cho các thuật toán dựa trên khoảng cách như k-Means
+2. Tỷ lệ khoảng cách trong cụm so với khoảng cách giữa các cụm (Intracluster to intercluster distance ratio)
+   - Tỷ lệ này được xác định bằng cách lấy $r$ cặp điểm dữ liệu và tính toán khoảng cách trung bình trong cụm $$Intra = \sum_{(X_i, X_j) \in P} Dist(X_i, X_j) / |P|$$ với P là các cặp thuộc cùng một cluster và giữa các cụm $$Inter = \sum_{(X_i, X_j) \in Q} Dist(X_i, X_j) / |Q|$$ với Q là các cặp thuộc 2 cluster khác nhau.
+   - Giá trị nhỏ của tỷ lệ này ($Intra / Inter$) chỉ ra chất lượng phân cụm tốt hơn.
+3. Hệ số Silhouette (Silhouette coefficient):
+   - Được tính bằng cách so sánh khoảng cách trung bình của một điểm dữ liệu tới các điểm trong cụm của nó với khoảng cách trung bình tới các điểm trong các cụm khác. $$S_i = \frac{Dmin_i^{out} - Davg_i^{in}}{max\{Dmin_j^{out}, Davg_j^{in}\}}$$ với $Dmin_i^{out}$ là khoảng cách nhỏ nhất tới các cụm khác, $Davg_i^{in}$ là khoảng cách trung bình bên trong cụm
+   - Hệ số $S_i$ này dao động từ -1 đến 1, với giá trị dương lớn chỉ ra sự tách biệt cao giữa các cụm
+4. Biện pháp xác suất (Probabilistic measure): áp dụng mixture model để estimate chất lượng của các cụm. (?...?)
+
+### 6.9.2. External Validation Criteria
+
+Đây là trường hợp có dữ liệu đánh nhãn để đánh giá. Trong trường hợp này thì chỉ cần sử dụng confusion matrix để đo lường
+
+# 8. Outlier Analysis
+
+## 8.1. Introduction
+
+Một ngoại lai là một điểm dữ liệu rất khác biệt với phần lớn các
+dữ liệu còn lại.
+
+Nếu như việc gom nhóm xác định các nhóm điểm dữ liệu giống
+nhau thì các ngoại lai là các điểm dữ liệu riêng lẻ khác biệt với các
+điểm còn lại
+
+Một số ứng dụng của việc phát hiện ngoại lai như sau.
+
+- Làm sạch dữ liệu.
+- Phát hiện gian lận thẻ tín dụng.
+- Phát hiện xâm nhập mạng
+
+Phần lớn các thuật toán phát hiện ngoại lai cho output
+thuộc một trong hai loại.
+
+- Điểm ngoại lai giá trị thực. (Real-valued outlier score)
+- Nhãn nhị phân. (Binary label)
+
+•Một số mô hình chính cho phân tích ngoại lai như sau.
+
+- Điểm cực hạn (Extreme values)
+- Mô hình gom nhóm (Clustering models)
+- Mô hình theo khoảng cách (Distance-based models)
+- Mô hình theo mật độ (Density-based models)
+- Mô hình xác suất (Probabilistic models:)
+- Mô hình lý thuyết thông tin (Information-theoretic models)
+
+## 8.2. Extreme Value Analysis
+
+Phân tích giá trị cực hạn là một dạng phân tích ngoại lai với các điểm dữ liệu ở vùng ngoài của dữ liệu.
+
+Lưu ý răng các điểm cực hạn là một dạng ngoại lai cụ thể nhưng không phải ngoại lai nào cũng là điểm cực hạn.
+
+### 8.2.1. Univariate (Đơn biến) Extreme Value Analysis
+
+Phân tích giá trị cự hạn đơn biến liên quan mật thiết đến các kiểm
+định độ tin cậy đuôi thống kê (statistical tail confidence test). Ở đây, đuôi thống kê là các vùng với mật độ phân phối thấp hơn
+một ngưỡng nào đó.
+
+Các phương pháp này xác định tỉ lệ các đối tượng được kì vọng là
+cực hạn dựa vào các giả thiết vể phân phối.
+
+![[Pasted image 20240627185152.png]]
+
+Ta có thể sử dụng kiểm định Z-score để xác định ngoại lai. Z-number $z_i$ của một giá trị $x_i$ được tính $z_i = (x_i - \mu) / \sigma$ và thường threshold của giá trị $z_i$ là 3. Điều này tương đương với việc điểm $x_i$ thuộc về $0.01 \%$ của phân phân chuẩn.
+
+
+**Note**: Khi $n$ (số sample) lớn (>= 30) thì $t$-distribution hội tụ về phân phối chuẩn
+
+### 8.2.2. Multivariate (Đa biến) Extreme Value Analysis
+
+Tương tự với trong trường hợp đơn biến, các đuôi thống kê cũng có thể được định nghĩa một cách tương tự.
+
+![[Pasted image 20240627185935.png]]
+
+### 8.2.3. Depth-Based Methods
+
+Các phương pháp theo chiều sâu dựa trên nguyên lý chung là bao lồi của
+một tập các điểm dữ liệu thể hiện các cực tối ưu Pareto của tập đó
+
+Các thuật toán này hoạt động theo các bước lặp mà khi ở bước *k*, tất cả các điểm ở góc của bao lồi được loại bỏ.
+
+Các chỉ số của bước lặp cũng cho ta một điểm ngoại lại với số nhỏ hơn thể hiện khả năng ngoại lai cao hơn.
+
+![[Pasted image 20240627190252.png]]
+
+```Copy
+Algorithm FindDepthOutliers(Data Set: D, Score Threshold: r)
+begin
+	k = 1;
+	repeat
+		Find set S of corners of convex hull of D;
+		Assign depth k to points in S;
+		D = D − S;
+		k = k + 1;
+	until(D is empty);
+	Report points with depth at most r as outliers;
+end
+```
+
+## 8.3. Probabilistic Models
+
+Các mô hình xác suất dựa trên sự tổng quát hóa của các phương pháp phân tích giá trị cực hạn đa biến.
+
+Cụ thể, phương pháp phân tích giá trị cực hạn đa biến theo khoảng cách Mahalanobis có thể được xem là một mô hình Gaussian mixture với một thành phần mixture đơn
+
+Khi tổng quát hoá mô hình này với nhiều thành phần mixture, chúng ta có thể xác định các ngoại lai thay vì chỉ các giá trị cực trị đa biến.
+
+---
+
+Nguyên lí tổng quát của sử dụng mô hình hỗn hợp để detect outliers là ta sẽ làm y chang những gì mô hình hỗn hợp làm để clustering nhưng đối với các điểm dữ liệu có khả năng thấp được sinh ra bởi model này được coi là ngoại lai 
+
+## 8.4. Clustering for Outlier Detection
+
+Nếu việc gom nhóm tìm các cụm dữ liệu dày đặc thì việc phân tích ngoại lai tìm các điểm xa những cụm này. Một cách nhìn đơn giản ở đây là mỗi điểm dữ liệu nếu không nằm trong một cụm nào khi gom nhóm thì sẽ được xem là ngoại lai.
+
+Các thuật toán gom nhóm thường có lựa chọn để loại bỏ ngoại lai. Tuy nhiên, do các thuật toán này không được tối ưu để phát hiện ngoại lai nên sử dụng như vậy không thích hợp.
+
+Một cách đơn giản để xác định điểm số ngoại lai của một điểm dữ liệu là trước hết gom nhóm tập dữ liệu và sau đó dùng khoảng cách của điểm dữ liệu đó đến tâm của cụm gần nhất.
+
+Nếu giá trị khoảng cách càng lớn thì xác suất điểm dữ liệu là outlier càng cao. Sau khi đã xác định khoảng cách, ta có thể dùng univariate extreme value analysis để convert chúng thành binary labels 
+
+Nhược điểm chính của clustering algorithms là chúng nhiều khi không thể phân biệt được đâu là điểm nhiễu môi trường (ambient noise), đâu là điểm dữ liệu thật sự bị cô lập (truly isolated anomalies) . Detection outlier dựa trên khoảng cách sẽ khắc phục điều này.
+
+**Chú thích**: 
+1. Ambient noise là các điểm nhiễu, xuất hiện ngẫu nhiên hoặc lỗi trong quá trình collect data, hoặc do một ngoại cảnh không ngờ tới. Khó nhận biết, xuất hiện thường xuyên và thường được loại bỏ hoặc làm mờ đi trong quá trình xử lý dữ liệu
+2. Truly isolated anomaly là các điểm bị cô lập, chúng không thuộc bất kì một cluster nào, chúng riêng rẽ và cách rất xa với tất cả các điểm dữ liệu. Xuất hiện rất ít nhưng mang một ý nghĩa rất quan trọng hoặc sự cố đặc biệt và cần được chú tâm và xử lý cẩn thận
+
+## 8.5. Distance-Based Outlier Detection
+
+Do ngoại lai là các điểm dữ liệu ở xa các vùng dữ liệu dày đặc, chúng ta cũng có thể sử dụng khoảng cách của một điểm đến k-nearest neighbor để tính điểm ngoại lai của điểm đó.
+
+Ngoài ra còn một số biến thể khác như sử dụng khoảng cách trung bình đến k-nearest neighbor
+
+Các phương pháp dựa trên khoảng cách thường sử dụng mức độ phân tích chi tiết hơn so với các phương pháp phân cụm và do đó có thể phân biệt giữa ambient noise và truly isolated anomalies do điểm cô lập có khoảng cách tới k-nearest neighbor cao hơn rất nhiều
+
+---
+
+Do vấn đề độ phức tạp tính toán, chúng ta có một số PP tăng tốc độ tính toán sau: 
+1. Index structures: dùng để determine k-nearest neighbor hiệu quả hơn. Tuy nhiên, nếu data có nhiều chiều thì **không nên sử dụng**
+2. Pruning tricks: PP này được gọi là "thủ thuật chấm dứt sớm". Tức chúng ta chỉ cần tính toán (cả tìm k-nearest neighbor và binary labels) cho top outlier score 
+Trong vài trường hợp, ta có thể kết hợp cả hai
+
+### 8.5.1. Pruning Methods
+
+Pruning methods  chỉ được dùng khi các ngoại lai top-*r* cần được trả về và không quan tâm đến điểm của các ngoại lai còn lại.
+
+Do đó, các phương pháp cắt xén chỉ thích hợp cho dự đoán nhị phân cho ngoại lai (binary labels)
+
+### 8.5.2. Local Distance Correction Methods
+
+
+
+# 9. Data Classification
