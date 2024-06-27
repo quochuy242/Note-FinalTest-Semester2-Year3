@@ -163,7 +163,7 @@ Hai thử thách với dòng dữ liệu lớn:
 #DataMining/DataPreprocessing/FeatureExtraction
 #DataMining/DataPreprocessing/DataCleaning
 #DataMining/DataPreprocessing/Normalization
-#DataMining/DataPreprocessing/Reduction
+#DataMining/DataPreprocessing/ReductionDimension
 
 ## 2.1. Introduction
 
@@ -201,15 +201,15 @@ Tùy thuộc vào mức độ và kiểu dữ liệu của ứng dụng mà ch�
 
 Bảng các thuật toán để biến đổi dữ liệu
 
-![[Pasted image 20240625124144.png]]
+![[data-type-portability.png]]
 
-#### 1. Discretization: rời rạc hóa
+1. Discretization: rời rạc hóa
 
-#### 2. Binarization: nhị phân hóa
+2. Binarization: nhị phân hóa
 
-#### 3. LSA: _đề cập sau_
+3. LSA: _đề cập sau_
 
-#### 4. SAX, DWT (Discrete Wavelet Transform), DFT (Discrete Fourier Transform): [link chatgpt](https://chatgpt.com/share/4cc2a243-6f4a-46ac-9336-146373efdf01)
+4. SAX, DWT (Discrete Wavelet Transform), DFT (Discrete Fourier Transform): [link chatgpt](https://chatgpt.com/share/4cc2a243-6f4a-46ac-9336-146373efdf01)
 
 ## 2.3. Data Cleaning
 
@@ -278,6 +278,10 @@ Có 2 phương pháp chính trong việc feature selection:
 2. Supervised //: _đề cập ở chương Data Classification_
 
 ### 2.4.3. Data reduction with axis rotation (Giảm chiều bằng phép xoay trục)
+
+#DataMining/DataPreprocessing/ReductionDimension/PCA
+#DataMining/DataPreprocessing/ReductionDimension/SVD
+#DataMining/DataPreprocessing/ReductionDimension/LSA
 
 Trong dataset thực tế thường tồn tại các tương quan giữa các feature khác nhau và chúng thường không chặt chẽ và xác định một cách thủ công.
 
@@ -358,7 +362,7 @@ Với các _p_ lớn thì ảnh hưởng của các thuộc tính không quan tr
 
 Trong nhiều ứng dụng, việc tính khoảng cách còn phụ thuộc vào phân phối của dữ liệu.
 
-![[Pasted image 20240625171700.png]]
+![[ex-principal-com.png]]
 
 Như trong hình thì đường nối tâm O đến điểm A nằm theo hướng có phương sai cao, còn đường nối tâm O đến điểm B thì có dữ liệu thưa và nằm theo hướng có phương sai thấp. Theo cách nhìn này, có thể đánh giá đoạn OB dài hơn OA. Khoảng cách Mahalanobis cũng được dựa trên nguyên lý này.
 
@@ -370,7 +374,7 @@ $$
 
 #DataMining/Distances/ISOMAP
 
-![[Pasted image 20240625171937.png]]
+![[ex-isomap.png]]
 
 Ảnh hưởng của ISOMAP đã giúp ta thấy được khoảng cách của điểm A và C là xa nhất, so với dùng khoảng cách truyền thống thì A, C là khoảng cách gần nhất
 
@@ -381,7 +385,7 @@ Cách tính gồm 2 bước:
 
 ### 3.2.8. Impact of Local Data Distribution
 
-![[Pasted image 20240625172519.png]]
+![[fig3.6.png]]
 
 Phân phối dữ liệu có thể thay đổi đáng kể theo từng cục bộ, dẫn tới việc tính toán có thể thay đổi
 
@@ -390,6 +394,8 @@ Như hình vẽ 3.6a, khoảng cách giữa (A,B) và (C,D) được cho là b�
 Đối với hình 3.6b, khoảng cách giữa (A, B) và (C, D) là giống nhau khi sử dụng metric Euclidean. Tuy nhiên, các cụm địa phương trong mỗi vùng có định hướng rất khác nhau. Trục có phương sai cao của cụm dữ liệu liên quan đến (A, B) thẳng hàng với đường từ A đến B, nhưng điều này không đúng với (C, D). Do đó, khoảng cách nội tại giữa C và D lớn hơn so với A và B. Ví dụ, nếu khoảng cách Mahalanobis địa phương được tính toán sử dụng thống kê hiệp phương sai cụm liên quan, thì khoảng cách giữa C và D sẽ lớn hơn khoảng cách giữa A và B.
 
 ## 3.3. Categorical Data
+
+#DataMining/Similarity/IOF
 
 Một cách đơn giản để tính khoảng cách giữa các dữ liệu định tính là sử dụng kĩ thuật nhị phân hóa (one hot encoding)
 
@@ -440,6 +446,10 @@ $$
 
 ## 3.5. Text Document Data
 
+#DataMining/Similarity/IDF
+#DataMining/Similarity/Jaccard
+#DataMining/Similarity/Cosine
+
 Văn bản có thể được xem là dữ liệu định lương đa chiều với tần suất xuất hiện của mỗi từ là một thuộc tính.
 
 Trường hợp này thì các khoảng cách sử dụng chuẩn Lp không thích hợp với các văn bản có độ dài khác nhau.
@@ -472,9 +482,11 @@ Phương pháp này đảm bảo rằng các từ ít gặp và có ý nghĩa h�
 
 Một công thức có mục tiêu tương tụ nhưng ít phổ biến hơn là _Jaccard coefficient_ , thường được sử dụng cho sparse binary data sets
 
-![[Pasted image 20240625222122.png]]
+![[jaccard-coff-formula.png]]
 
 ## 3.6. Binary and Set Data
+
+#DataMining/Similarity/Jaccard
 
 Dữ liệu nhị phân là một dạng đặc biệt của dữ liệu dạng tập hợp, trong đó giá trị 1 biểu thị sự có mặt của một phần tử trong tập hợp, còn giá trị 0 biểu thị sự vắng mặt của phần tử đó
 
@@ -514,6 +526,8 @@ Lưu ý rằng không phải lúc nào các vấn đề chuẩn hóa này cũng 
 
 ### 3.7.2. $L_p - Norm$
 
+#DataMining/Distances/LpNorm
+
 Phép đo này coi một chuỗi thời gian như một điểm dữ liệu đa chiều, trong đó mỗi dấu thời gian là một chiều.
 
 Các điểm chính trong đoạn văn bao gồm:
@@ -537,7 +551,10 @@ Chuẩn $L_p$ là một công cụ hữu ích để đo khoảng cách giữa c�
 
 ### 3.7.3. Dynamic Time Warping Distance
 
-![[Pasted image 20240625225720.png]]
+#DataMining/Distances/DWT
+#DataMining/Distances/LpNorm
+
+![[content-dtw.png]]
 
 1. **Định Nghĩa và Ứng Dụng của DTW**:
 
@@ -641,6 +658,8 @@ Các đồ thị ở đây được giả sử là vô hướng
 
 ### 3.9.1. Similarity between Two Nodes in a Single Graph
 
+#Graph
+
 Trong một số lĩnh vực, như mạng thư tịch (bibliographic networks) thì các
 cạnh được gắn trọng số (weights) và hàm tương đồng được dùng.
 
@@ -707,6 +726,8 @@ mua bởi khách hàng.
 
 ## 4.2. The Frequent Pattern Mining Model
 
+#DataMining/AssociationPatternMining/FrequentPattern
+
 Giả định CSDL _T_ chứa _n_ giao dịch $T_1, T_2, \ldots, T_n$
 
 Mỗi giao dịch $T_i$ được biểu diễn bằng một bản ghi đa chiều với độ dài $d = |U|$, trong đó $U$ là tập hợp các mục (items).
@@ -759,7 +780,7 @@ $$conf(X_2 \Rightarrow I - X_2) \geq conf(X_1 \Rightarrow I - X_1)$$
 
 #DataMining/AssociationPatternMining/BruteForce
 
-![[Pasted image 20240626164958.png]]
+![[itemset-lattice.png]]
 
 Nếu ta có một items U, thì số lượng distinct subsets sẽ là $2^{|U|} - 1$, trừ empty set và được biểu diễn như hình 4.1
 
@@ -804,7 +825,7 @@ Lặp cho tới khi $F_k$ rỗng thì dừng.
 - k += 1
   Return $\cup_{i=1}^k F_i$
 
-![[Pasted image 20240626174105.png]]
+![[downward-closure.png]]
 
 # 6. Cluster Analysis
 
@@ -853,8 +874,10 @@ Trong các mô hình lọc, một số tiêu chí cụ thể được sử dụn
 
 #### 3. Entropy
 
+#AI/Algorithm/Entropy
+
 - **Mô tả**: Dữ liệu có sự phân cụm cao sẽ phản ánh đặc tính phân cụm của nó trên các phân phối khoảng cách nền tảng.
-  ![[Pasted image 20240626180220.png]]
+  ![[dist-distribution.png]]
 - **Cách tính**:
   - Phân chia dữ liệu thành các vùng lưới đa chiều.
   - Tính xác suất phân phối và entropy dựa trên các giá trị này:
@@ -865,6 +888,8 @@ Trong các mô hình lọc, một số tiêu chí cụ thể được sử dụn
 - **Cách tiếp cận khác**: Tính entropy dựa trên phân phối khoảng cách điểm-điểm 1 chiều của một mẫu dữ liệu.
 
 #### 4. Thống Kê Hopkins (Hopkins Statistic)
+
+#Statistic/Hopkins
 
 - **Mô tả**: Đo lường xu hướng phân cụm của tập dữ liệu, và có thể áp dụng cho tập con các thuộc tính.
 - **Cách tính**:
@@ -909,6 +934,8 @@ Trong trường hợp này, các tập hợp con đặc trưng được xây d�
 
 ## 6.3. Representative-Based Algorithms (Thuật Toán Phân Cụm Dựa Trên Đại Diện)
 
+#DataMining/DataClustering/Representative
+
 Các thuật toán dựa theo đại diện dựa trực tiếp vào khái niệm
 khoảng cách (hoặc sự tương đồng) để gom nhóm các điểm dữ liệu.
 
@@ -934,7 +961,10 @@ Các bài toàn tối ưu này thường được giải bằng phương pháp l
 
 ### 6.3.1. k-Means Clustering
 
+#AI/MachineLearning/Clustering/kMeans
+
 Trong thuật toán k-Means, hàm distance là Euclidean
+#DataMining/Distances/Euclidean
 
 $$Dist(X_i, Y_j) = ||(X_i - Y_j)||^2_2$$
 
@@ -943,6 +973,8 @@ $$Dist(X_i, Y_j) = ||(X_i - Y_j)||^2_2$$
 ---
 
 Biến thể k-Means với distance Mahalanobis
+
+#DataMining/Distances/Mahalanobis
 
 $$Dist(X_i, Y_j) = (X_i - Y_j)\Sigma^{-1}_j(X_i - Y_j)^T$$
 
@@ -989,6 +1021,8 @@ Với các thuật toán dựa theo đại diện này, chúng ta có một số
 
 ## 6.4. Hierarchical Clustering Algorithms
 
+#DataMining/DataClustering/Hierarchical
+
 Các thuật toán gom cụm phân tầng thường gom cụm dữ liệu với
 khoảng cách. Tuy nhiên, các hàm khoảng cách thường không bắt
 buộc phải có.
@@ -1021,7 +1055,7 @@ begin
 end
 ```
 
-![[Pasted image 20240627143506.png]]
+![[visualize-res-hierarchical.png]]
 
 #### Lựa Chọn Tiêu Chí Gom Cụm
 
@@ -1061,6 +1095,8 @@ Thuật toán khởi tạo cây tại nút gốc chứa tất cả các điểm 
 Lưu ý rằng thuật toán A có thể là bất kỳ thuật toán phân cụm nào, không chỉ là thuật toán dựa trên khoảng cách.
 
 ## 6.5. Probabilistic Model-Based Algorithms
+
+#DataMining/DataClustering/Probabilistic
 
 Các thuật toán như chúng ta đã tìm hiểu mà mỗi điểm dữ liệu được
 gom xác định gán vào một cụm cụ thể gọi là hard clustering algorithm.
@@ -1115,26 +1151,20 @@ Hai bước này được thực hiện lặp đi lặp lại để cải thiệ
 
 ## 6.6. Grid-Based and Density-Based Algorithms
 
-Một vấn đề quan trọng với các thuật toán
-dựa theo khoảng cách hoặc các phương
-pháp xác suất là hình dáng của các nhóm
-đã được quy định ngầm với hàm khoảng
-cách hoặc phân phối xác suất.
+Một vấn đề quan trọng với các thuật toán dựa theo khoảng cách hoặc các phương pháp xác suất là hình dáng của các nhóm đã được quy định ngầm với hàm khoảng cách hoặc phân phối xác suất.
 
-Đặc tính này sẽ không phù hợp với một số
-ứng dụng cần các nhóm có hình dạng bất kì.
+Đặc tính này sẽ không phù hợp với một số ứng dụng cần các nhóm có hình dạng bất kì.
 
-Với các tình huống thế này thì các phương pháp dựa theo mật độ
-rất hữu ích.
+Với các tình huống thế này thì các phương pháp dựa theo mật độ rất hữu ích.
 
-Ý tưởng chính của phương pháp này là xác định các vùng dày đặc
-(mật độ cao) trong dữ liệu. Các vùng này sẽ là các “khối xây dựng”
-cho các cụm với hình dáng bất kì.
+Ý tưởng chính của phương pháp này là xác định các vùng dày đặc (mật độ cao) trong dữ liệu. Các vùng này sẽ là các “khối xây dựng” cho các cụm với hình dáng bất kì.
 
 Tùy thuộc vào việc lựa chọn các “khối xây dựng” mà chúng ta có các
 biến thể.
 
 ### 6.6.1. Grid-Based Algorithms
+
+#DataMining/DataClustering/Grid
 
 Với các phương pháp này, dữ liệu được rời rạc hóa thành một số các
 khoảng (thường là cùng chiều rộng).
@@ -1156,11 +1186,15 @@ return points in each connected component as a cluster;
 end
 ```
 
-![[Pasted image 20240627155356.png]]
+![[grid-clustering.png]]
 
 ### 6.6.2. Density-Based Algorithms
 
+#DataMining/DataClustering/Density
+
 #### 6.6.2.1. DBSCAN
+
+#AI/MachineLearning/Clustering/DBSCAN
 
 ```Copy
 Algorithm DBSCAN(Data: D, Radius: Eps, Density: τ )
@@ -1185,7 +1219,7 @@ Các khái niệm về điểm:
 2. Border point (điểm biên): Là điểm nằm trong bán kính eps của một điểm core point nhưng không đủ điểm để trở thành core point.
 3. Noise point (điểm nhiễu): Là các điểm không phải core point hoặc border point.
 
-![[Pasted image 20240627160301.png]]
+![[ex-core-border-noise-score.png]]
 
 ---
 
@@ -1196,6 +1230,8 @@ Quá trình phân cụm:
 - Các điểm còn lại sẽ được đánh dấu là điểm nhiễu.
 
 #### 6.6.2.2. DENCLUE
+
+#AI/MachineLearning/Clustering/DENCLUE
 
 ```Copy
 Algorithm DENCLUE(Data: D, Density: τ )
@@ -1245,9 +1281,12 @@ Các cụm được xác định dựa trên mật độ và khoảng cách gi�
 
 ---
 
-![[Pasted image 20240627161404.png]]
+![[fig6.18&19.png]]
 
 ## 6.7. Graph-Based Algorithms
+
+#Graph
+#DataMining/DataClustering/Graph
 
 Các thuật toán dựa theo đồ thị cung cấp một meta-framework
 chung mà trong đó gần như tất cả kiểu dữ liệu đều có thể được
@@ -1304,6 +1343,8 @@ B3: Trả về cluster (communities) tương ứng với nhóm còn l�
 
 ## 6.8. Non-negative Matrix Factorization
 
+#DataMining/DataPreprocessing/ReductionDimension/NMF
+
 Đây là một kĩ thuật giảm chiều dữ liệu, trong đó các thành phần của ma trận (cần giảm chiều) phải không âm.
 
 NMF là quá trình phân tách ma trận $D$ thành tích hai ma trận không âm khác là $U, V$ sao cho $D \approx U \cdot V^T$. Trong đó, $U$ thường được gọi là ma trận cơ sở (basis matrix) và $V^T$ là ma trận hệ số (coefficient matrix).
@@ -1330,6 +1371,8 @@ Cluster validation là quá trình đánh giá chất lượng của một phân
 
 ### 6.9.1. Internal Validation Criteria
 
+#DataMining/DataClustering/SilhouetteScore
+
 Tiêu chí xác thực nội bộ được sử dụng khi không có tiêu chí bên ngoài để đánh giá chất lượng phân cụm
 
 Những tiêu chí này thường được mượn trực tiếp từ hàm mục tiêu mà thuật toán phân cụm cụ thể tối ưu hóa.
@@ -1352,6 +1395,8 @@ Các tiêu chí nội bộ phổ biến bao gồm:
 Đây là trường hợp có dữ liệu đánh nhãn để đánh giá. Trong trường hợp này thì chỉ cần sử dụng confusion matrix để đo lường
 
 # 8. Outlier Analysis
+
+#DataMining/OutlierDetection
 
 ## 8.1. Introduction
 
@@ -1385,6 +1430,8 @@ thuộc một trong hai loại.
 
 ## 8.2. Extreme Value Analysis
 
+#DataMining/OutlierDetection/ExtremeValue
+
 Phân tích giá trị cực hạn là một dạng phân tích ngoại lai với các điểm dữ liệu ở vùng ngoài của dữ liệu.
 
 Lưu ý răng các điểm cực hạn là một dạng ngoại lai cụ thể nhưng không phải ngoại lai nào cũng là điểm cực hạn.
@@ -1398,10 +1445,9 @@ một ngưỡng nào đó.
 Các phương pháp này xác định tỉ lệ các đối tượng được kì vọng là
 cực hạn dựa vào các giả thiết vể phân phối.
 
-![[Pasted image 20240627185152.png]]
+![[tail-hypothesis.png]]
 
 Ta có thể sử dụng kiểm định Z-score để xác định ngoại lai. Z-number $z_i$ của một giá trị $x_i$ được tính $z_i = (x_i - \mu) / \sigma$ và thường threshold của giá trị $z_i$ là 3. Điều này tương đương với việc điểm $x_i$ thuộc về $0.01 \%$ của phân phân chuẩn.
-
 
 **Note**: Khi $n$ (số sample) lớn (>= 30) thì $t$-distribution hội tụ về phân phối chuẩn
 
@@ -1409,18 +1455,18 @@ Ta có thể sử dụng kiểm định Z-score để xác định ngoại lai. 
 
 Tương tự với trong trường hợp đơn biến, các đuôi thống kê cũng có thể được định nghĩa một cách tương tự.
 
-![[Pasted image 20240627185935.png]]
+![[fig8.3.png]]
 
 ### 8.2.3. Depth-Based Methods
 
 Các phương pháp theo chiều sâu dựa trên nguyên lý chung là bao lồi của
 một tập các điểm dữ liệu thể hiện các cực tối ưu Pareto của tập đó
 
-Các thuật toán này hoạt động theo các bước lặp mà khi ở bước *k*, tất cả các điểm ở góc của bao lồi được loại bỏ.
+Các thuật toán này hoạt động theo các bước lặp mà khi ở bước _k_, tất cả các điểm ở góc của bao lồi được loại bỏ.
 
 Các chỉ số của bước lặp cũng cho ta một điểm ngoại lại với số nhỏ hơn thể hiện khả năng ngoại lai cao hơn.
 
-![[Pasted image 20240627190252.png]]
+![[fig8.5.png]]
 
 ```Copy
 Algorithm FindDepthOutliers(Data Set: D, Score Threshold: r)
@@ -1438,6 +1484,8 @@ end
 
 ## 8.3. Probabilistic Models
 
+#DataMining/OutlierDetection/Probabilistic
+
 Các mô hình xác suất dựa trên sự tổng quát hóa của các phương pháp phân tích giá trị cực hạn đa biến.
 
 Cụ thể, phương pháp phân tích giá trị cực hạn đa biến theo khoảng cách Mahalanobis có thể được xem là một mô hình Gaussian mixture với một thành phần mixture đơn
@@ -1446,9 +1494,11 @@ Khi tổng quát hoá mô hình này với nhiều thành phần mixture, chúng
 
 ---
 
-Nguyên lí tổng quát của sử dụng mô hình hỗn hợp để detect outliers là ta sẽ làm y chang những gì mô hình hỗn hợp làm để clustering nhưng đối với các điểm dữ liệu có khả năng thấp được sinh ra bởi model này được coi là ngoại lai 
+Nguyên lí tổng quát của sử dụng mô hình hỗn hợp để detect outliers là ta sẽ làm y chang những gì mô hình hỗn hợp làm để clustering nhưng đối với các điểm dữ liệu có khả năng thấp được sinh ra bởi model này được coi là ngoại lai
 
 ## 8.4. Clustering for Outlier Detection
+
+#DataMining/OutlierDetection/Clustering
 
 Nếu việc gom nhóm tìm các cụm dữ liệu dày đặc thì việc phân tích ngoại lai tìm các điểm xa những cụm này. Một cách nhìn đơn giản ở đây là mỗi điểm dữ liệu nếu không nằm trong một cụm nào khi gom nhóm thì sẽ được xem là ngoại lai.
 
@@ -1456,15 +1506,18 @@ Các thuật toán gom nhóm thường có lựa chọn để loại bỏ ngoạ
 
 Một cách đơn giản để xác định điểm số ngoại lai của một điểm dữ liệu là trước hết gom nhóm tập dữ liệu và sau đó dùng khoảng cách của điểm dữ liệu đó đến tâm của cụm gần nhất.
 
-Nếu giá trị khoảng cách càng lớn thì xác suất điểm dữ liệu là outlier càng cao. Sau khi đã xác định khoảng cách, ta có thể dùng univariate extreme value analysis để convert chúng thành binary labels 
+Nếu giá trị khoảng cách càng lớn thì xác suất điểm dữ liệu là outlier càng cao. Sau khi đã xác định khoảng cách, ta có thể dùng univariate extreme value analysis để convert chúng thành binary labels
 
 Nhược điểm chính của clustering algorithms là chúng nhiều khi không thể phân biệt được đâu là điểm nhiễu môi trường (ambient noise), đâu là điểm dữ liệu thật sự bị cô lập (truly isolated anomalies) . Detection outlier dựa trên khoảng cách sẽ khắc phục điều này.
 
-**Chú thích**: 
+**Chú thích**:
+
 1. Ambient noise là các điểm nhiễu, xuất hiện ngẫu nhiên hoặc lỗi trong quá trình collect data, hoặc do một ngoại cảnh không ngờ tới. Khó nhận biết, xuất hiện thường xuyên và thường được loại bỏ hoặc làm mờ đi trong quá trình xử lý dữ liệu
 2. Truly isolated anomaly là các điểm bị cô lập, chúng không thuộc bất kì một cluster nào, chúng riêng rẽ và cách rất xa với tất cả các điểm dữ liệu. Xuất hiện rất ít nhưng mang một ý nghĩa rất quan trọng hoặc sự cố đặc biệt và cần được chú tâm và xử lý cẩn thận
 
 ## 8.5. Distance-Based Outlier Detection
+
+#DataMining/OutlierDetection/Distance
 
 Do ngoại lai là các điểm dữ liệu ở xa các vùng dữ liệu dày đặc, chúng ta cũng có thể sử dụng khoảng cách của một điểm đến k-nearest neighbor để tính điểm ngoại lai của điểm đó.
 
@@ -1474,19 +1527,179 @@ Các phương pháp dựa trên khoảng cách thường sử dụng mức độ
 
 ---
 
-Do vấn đề độ phức tạp tính toán, chúng ta có một số PP tăng tốc độ tính toán sau: 
+Do vấn đề độ phức tạp tính toán, chúng ta có một số PP tăng tốc độ tính toán sau:
+
 1. Index structures: dùng để determine k-nearest neighbor hiệu quả hơn. Tuy nhiên, nếu data có nhiều chiều thì **không nên sử dụng**
-2. Pruning tricks: PP này được gọi là "thủ thuật chấm dứt sớm". Tức chúng ta chỉ cần tính toán (cả tìm k-nearest neighbor và binary labels) cho top outlier score 
-Trong vài trường hợp, ta có thể kết hợp cả hai
+2. Pruning tricks: PP này được gọi là "thủ thuật chấm dứt sớm". Tức chúng ta chỉ cần tính toán (cả tìm k-nearest neighbor và binary labels) cho top outlier score
+   Trong vài trường hợp, ta có thể kết hợp cả hai
 
 ### 8.5.1. Pruning Methods
 
-Pruning methods  chỉ được dùng khi các ngoại lai top-*r* cần được trả về và không quan tâm đến điểm của các ngoại lai còn lại.
+Pruning methods chỉ được dùng khi các ngoại lai top-_r_ cần được trả về và không quan tâm đến điểm của các ngoại lai còn lại.
 
 Do đó, các phương pháp cắt xén chỉ thích hợp cho dự đoán nhị phân cho ngoại lai (binary labels)
 
+#### 8.5.1.1. Sampling Methods
+
+B1: Chọn mẫu con
+
+- Chọn mẫu con $S$ từ tập $D$ với kích thước $s$ bé hơn rất nhiều $n$
+- Tính tất cả distance $Dist(S_i, D_i)$ (có tổng $n \cdot s$ cặp điểm)
+
+B2: Xác định ranh giới: Từ các outlier score, ta có được một chặn dưới $L$ cho top-_r_ trên toàn tập dữ liệu $D$ (?...?)
+
+B3: Xử lý các điểm còn lại
+
+- Xử lý data trong $D-S$ : Đối với các điểm trong $D-S$, chỉ có một chặn trên $V_k(X)$ cho khoảng cách k-NN từ điểm trong $D-S$ đến $S$
+- Loại bỏ các điểm không cần thiết: Nếu chặn trên $V_k(X)$ không lớn hơn $L$, thì $X \in D-S$ loại khỏi tập top-_r_
+
+B4: Ứng dụng k-NN trên các tập còn lại: Sau khi loại bỏ các điểm trong $D-S$, tập hợp các điểm còn lại $R$. Áp dụng k-NN cho $R$. Xét top-_r_ cho tập $R \cup S$ và đây là kết quả cuối cùng
+
+Đây là PP giúp giảm việc tính toán do $|R \cup S| \ll |D|$
+
+#### 8.5.1.2 Early Termination Trick with Nested Loops
+
+Đây là PP cải tiến thêm tốc độ tính toán distance k-NN cho mỗi điểm dữ liệu trong tập $R$ đã xác định bên trên
+
+```Copy
+for each X ∈ R do begin
+	for each Y ∈ D−S do begin
+			Update current k-nearest neighbor distance estimate V_k(X)
+				by computing distance of Y to X;
+			if V k(X) ≤ L then terminate inner loop;
+	endfor
+	if V_k(X) > L then include X in current r best outliers and update
+		L to the new rth best outlier score;
+endfor
+```
+
+Đương nhiên là tập $R, D-S$ trong hai vòng for đã được sort.
+
+Với $R$ thì sort theo thứ tự giảm dần của ước lượng ban đầu $V_k(\cdot)$ và $D-S$ thì sort theo thứ tự tăng dần $V_k(Y)$
+
 ### 8.5.2. Local Distance Correction Methods
 
+**Phân bố dữ liệu cục bộ** ảnh hưởng đáng kể đến việc tính toán khoảng cách giữa các điểm dữ liệu.
 
+Khoảng cách Euclidean truyền thống không phản ánh đúng khoảng cách nội tại giữa các điểm khi mật độ và hình dạng của các cụm thay đổi theo từng vùng dữ liệu.
 
-# 9. Data Classification
+#### 8.5.2.1. Local Outlier Factor (LOF)
+
+#DataMining/OutlierDetection/Distance/LOF
+
+Các định nghĩa:
+
+1. Khoảng cách tiếp cần (Reachability Distance)
+
+Khoảng cách tiếp cận giữa điểm X và Y là giá trị lớn nhất của khoảng cách thực tế giữa X và Y, và khoảng cách k-nearest neighbor của Y.
+$$R_k(X, Y) = max \{ Dist(X, Y), V_k(Y) \}$$ 2. Khoảng cách tiếp cận trung bình (Average Reachability Distance):
+
+Khoảng cách tiếp cận trung bình của điểm dữ liệu X với vùng lân cận $L_k(X)$ là trung bình của các khoảng cách tiếp cận của nó đến tất cả các điểm trong vùng lân cận
+$$AR_k(X) = MEAN_{Y \in L_k(X)}R_k(X,Y)$$
+
+3. Hệ số ngoại lai cục bộ (Local Outlier Factor - LOF): Hệ số ngoại lai cục bộ là trung bình tỉ lệ của $AR_k(X)$ so với các giá trị tương ứng của tất cả các điểm trong k-neighborhood của $X$.
+   $$LOF_k(X) = MEAN_{Y \in L_k(X)} \frac{AR_k(X)}{AR_k(Y)}$$
+
+Trong trường hợp các cụm có mật độ khác nhau (như hình 8.8a), giá trị LOF của các điểm trong cả hai cụm sẽ gần bằng 1, ngay cả khi mật độ của hai cụm khác nhau. Trong khi đó, giá trị LOF của các điểm ngoại lai sẽ cao hơn vì chúng được tính toán dựa trên tỷ lệ với các khoảng cách tiếp cận trung bình của các điểm lân cận.
+
+![[fig8.8.png]]
+
+#### 8.5.2.2. Instance-Specific Mahalanobis Distance
+
+#DataMining/Distances/Mahalanobis
+
+Ở đây, khoảng cách Mahalanobis liên quan trực tiếp đến hình dạng của phân phối dữ liệu, nhưng thường là theo cách hiểu toàn cục. Tuy nhiên, chúng ta cũng có thể sử dụng khoảng cách Mahalanobis cục bộ.
+
+Phương pháp khoảng cách Mahalanobis đặc trưng cho từng đối tượng cho phép phân tích chi tiết hơn bằng cách xem xét điểm dữ liệu X có thể được coi là giá trị ngoại lai so với cụm cục bộ của nó hay không
+
+Tính Local Mahalanobis Score
+
+1. Tính toán giá trị trung bình $\mu_k(X)$ và ma trận hiệp phương sai $\Sigma_k(X)$ của vùng lân cận $L_k(X)$.
+2. Tính Local Mahalanobis Score
+   $$LMahak(X) = Maha(X, \mu_k(X), \Sigma_k(X))$$
+
+Cách tiếp cận này được thiết kế để điều chỉnh theo hình dạng thay đổi của phân phối tại cục bộ của một điểm dữ liệu cụ thể, như hình 8.8b.
+
+![[fig8.8.png]]
+
+## 8.6. Density-Based Methods
+
+#DataMining/OutlierDetection/Density
+
+Các phương pháp phát hiện ngoại lai theo mật độ được dựa trên các nguyên lý tương tự như các phương pháp gom nhóm theo mật độ. Ý tưởng chính là xác định các vùng thưa trong dữ liệu đằng sau để chọn ra các ngoại lai.
+
+Ở đây chúng ta có các phương pháp dựa theo histogram, theo lưới hoặc theo mật độ kernel. Các phương pháp này không phổ biển lắm do khó điểu chỉnh theo các biến động mật độ ở các cục bộ dữ liệu khác nhau.
+
+### 8.6.1 Histogram- and Grid-Based Techniques
+
+Các histogram có thể được dễ dàng xây dựng cho dữ liệu đơn biến với rất nhiều ứng dụng.
+
+Với các kĩ thuật này, dữ liệu được chia thành các ngăn và tần suất của mỗi ngăn được ước lượng.
+
+Các điểm dữ liệu nằm trong các ngăn với tần suất rất thấp được xác định là ngoại lai.
+
+---
+
+Trong trường hợp đa biến, chúng ta có một cách tổng hóa của histogram là lưới. Mỗi chiều được chia thành các khoảng cùng độ dài.
+
+Các điểm dữ liệu nằm trong các vùng lưới có mật độ thấp được xác định là ngoại lai.
+
+### 8.6.2. Kernel Density Estimation
+
+Các phương pháp này giống với các kĩ thuật histogram theo cách xây dựng profile mật độ.
+
+Tuy nhiên, một khác biệt lớn là chúng ta có các profile mật độ mịn hơn. Cụ thể, chúng ta có một ước lượng liên tục cho mỗi điểm.
+
+Mỗi hàm kernel đi kèm với một độ dài kernel h xác định độ mịn từ hàm.
+
+$$f(X) = \frac{1}{n} \sum_{i=1}^n K_h(X - X_i)$$
+
+Ví dụ: Gaussian kernel
+$$K_h(X - X_i) = (\frac{1}{h\sqrt{2\pi}})^d e^{-\frac{||X - X_i||^2}{2h^2}}$$
+
+## 8.7. Information-Theoretic Models
+
+#DataMining/OutlierDetection/Infomation-Theoretic
+
+(?...?)
+
+Các mô hình theo lý thuyết thông tin có thể được xem là gần như tương đương với các mô hình bình thường.
+
+Với một khác biệt chính là các điểm số ngoại lại được xác định bới kích thước mô hình cho một độ lệch cố định thay vì được xác định bởi độ lệch cho một mô hình cố định.
+
+## 8.8. Outlier Validity
+
+### 8.8.1 Methodological Challenges
+
+Tương tự như các phương pháp gom cụm, phân tích ngoại lai thường có dạng bài toán không được giám sát.
+
+Do tính không giám sát này mà chúng ta thường thiếu các tiêu chí ngoài để xác thực kết quả.
+
+Từ đây chúng ta muốn tìm các tiêu chí trong cho việc này.
+
+Tuy nhiên, các khuyết điểm của các tiêu chí trong trong phân tích ngoại lai còn nặng hơn trong gom nhóm và do đó hiếm khi được sử dụng.
+
+### 8.8.2. Receiver Operating Characteristic (ROC)
+
+#AI/MachineLearning/Metrics/ROC
+#AI/MachineLearning/Metrics/Recall
+
+Các thuật toán phát hiện ngoại lai thường được đánh giá với các độ đo ngoài khi chúng ta có nhãn các ngoại lai từ dữ liệu synthetic hoặc các trường hợp hiếm có từ dữ liệu thật.
+
+Các nhãn này được so sánh một cách hệ thống với điểm số ngoại lai từ model.
+
+Với các mô hình phát hiện ngoại lai, một ngưỡng nào đó thường được dùng với điểm số ngoại lai để xác định nhãn nhị phân, và việc chọn ngưỡng này ảnh hưởng đến false positive và false negative.
+
+Để chọn lựa thuật toán với trade off thích hợp, chúng ta có thể sử dụng các trade-off curve tạo ra từ một số phương pháp như Receiver Operating Characteristic (ROC) curve
+
+Định nghĩa:
+
+1. True-Positive Rate $$TPR(t) = Recall(t) = \frac{|S(t) \cap G|}{|G|}$$
+2. False Positive Rate
+   $$FPR(t) = \frac{|S(t) - G|}{|D-G|}$$
+   Trong đó, $S(t)$ là tập outlier, $G$ là true set, $D$ là data set
+3. ROC curve được định nghĩa là đồ thị với $FPR(t)$ ở trục hoành (X-axis) và $TPR(t)$ ở trục tung (Y-axis). Đường cong càng nâng cao lên thì độ chính xác càng tốt
+
+### 8.8.3. Common mistakes
+
+Đối với các bài toán Unsupervised Learning nhưng có label để validation, tuyệt đối không sử dụng label cho mục đích tinh chuẩn thuật toán
