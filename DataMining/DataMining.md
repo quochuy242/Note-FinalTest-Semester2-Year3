@@ -93,10 +93,10 @@ Có hai loại phụ thuộc:
 1. Phụ thuộc ngầm: các phụ thuộc giữa các mục dữ liệu không được chỉ định rõ ràng nhưng chúng "thường" tồn tại trong lĩnh vực đó. Ví dụ: nhiệt độ đo được từ cảm biến ở các thời điểm khác nhau, nếu ở hai thời điểm gần nhau mà nhiệt độ chêch lệch lớn thì đấy là dấu hiệu của sự không bình thường.
 2. Phụ thuộc tường minh: Thường ám chỉ đến dữ liệu đồ thị (graph) hoặc mạng (network data) trong đó các cạnh được sử dụng để chỉ định mối quan hệ rõ ràng.
 
-Dữ liệu định hướng phụ thuộc có thể được phân thành các loại sau:
+Dữ liệu định hướng không phụ thuộc có thể được phân thành các loại sau:
 
 - Time-Series data: Dữ liệu chuỗi thời gian chứa các giá trị thường được tạo ra bởi việc đo liên tục trong thời gian
-- Discrete Sequences and Strings: Dãy rời rạc có thể được coi là biến thể của dữ liệu chuỗi thời gian. Giống như dữ liệu chuỗi thời gian, contextual attribute (thuộc tính ngữ cảnh) là một time stamp hoặc position index. Behavioral attribute (thuộc tính hành vi) là một catogorical value. Do đó, dữ liệu dãy rời rạc được định nghĩa tương tự dữ liệu chuỗi thời gian.
+- Discrete Sequences and Strings: Dãy rời rạc có thể được coi là biến thể của dữ liệu chuỗi thời gian. Giống như dữ liệu chuỗi thời gian, contextual attribute (thuộc tính ngữ cảnh) là một time stamp hoặc position index. Behavioral attribute (thuộc tính hành vi) là một categorical value. Do đó, dữ liệu dãy rời rạc được định nghĩa tương tự dữ liệu chuỗi thời gian.
 - Spatial Data: bao gồm nhiều attribute không tuân theo không gian (nonspatial attributes) (ví dụ: nhiệt độ, áp suất...) được đo dựa trên không gian của chúng. Ví dụ: nhiệt độ bề mặt biển.
 - Network and Graph Data:
 
@@ -253,7 +253,7 @@ Có 2 cách thức lấy mẫu dữ liệu
 
 2. **Lấy mẫu reservoir cho dòng dữ liệu**
 
-   Các dòng dữ liệu thường ko kích thước cố đinh mà liên tục có các điểm dữ liệu mới. Với cách lấy mẫu này, một mẫu với _k_ điểm cho trước được duy trì một cách linh động từ dòng dữ liệu.
+   Các dòng dữ liệu thường ko kích thước cố định mà liên tục có các điểm dữ liệu mới. Với cách lấy mẫu này, một mẫu với _k_ điểm cho trước được duy trì một cách linh động từ dòng dữ liệu.
 
    Do kích thước rất lớn của một dòng dữ liệu, chúng ta cần các bước xử lý để duy trì tập mẫu _k_ điểm với mỗi điểm dữ liệu mới từ dòng.
 
@@ -266,7 +266,7 @@ Có 2 cách thức lấy mẫu dữ liệu
 
    Sau đó, với điểm dữ liệu thứ _n_ từ dòng, chúng ta có 2 quyết định điều khiển sau:
 
-   - Cho điểm thử n vào reservoir với xác xuất _k/n_.
+   - Cho n điểm dữ liệu mới vào reservoir với xác xuất _k/n_.
    - Nếu điểm dữ liệu mới được cho vào thì loại bỏ một trong _k_ điểm dữ liệu cũ một cách ngẫu nhiên.
 
 ### 2.4.2. Feature Selection
@@ -285,12 +285,12 @@ Có 2 phương pháp chính trong việc feature selection:
 #ReductionDimension/SVD
 #ReductionDimension/LSA
 
-Trong dataset thực tế thường tồn tại các tương quan giữa các feature khác nhau và chúng thường không chặt chẽ và xác định một cách thủ công.
+Trong dataset thực tế thường tồn tại các tương quan giữa các feature khác nhau và chúng thường không chặt chẽ và khó xác định một cách thủ công.
 
-Từ các ràng buộc và tương quan trên, một số thông tin từ một chiều có thể dùng để dự đoán thong tin của các chiều khác.
+Từ các ràng buộc và tương quan trên, một số thông tin từ một feature có thể dùng để dự đoán thông tin của các feature khác.
 
 1. **PCA (Principal Component Analysis)**: Mục tiêu của PCA là xoay dữ liệu về một hệ trục sao cho lượng phương sai lớn nhất có thể được biểu diễn bởi một số chiều nhỏ nhất. Phương sai của một tập dữ liệu theo một hướng cụ thể có thể được thể hiện thông qua ma trận phương sai của dữ liệu. Có thể chứng minh được ma trận phương sai là đối xứng, nửa xác định dương. Từ đó, ma trận này chéo hóa được và các trị riêng của ma trận phương sai biểu diễn phương sai của dữ liệu dọc theo vectors riêng tương ứng. Do đó các vectors riêng với trị riêng lớn sẽ thể hiện phương sai lớn hơn và được gọi là các principal component, các trục chính mới chúng ta dùng để biểu diễn dữ liệu.
-2. **SVD (Singular value decomposition)**: SVD có quan hệ gần với PCA. SVD có 2 bộ vector cơ sở thay vì 1 như PCA. SVD cho cùng vector cơ sở với PCA nêu các thuộc tính của dữ liệu có trung bình là 0
+2. **SVD (Singular value decomposition)**: SVD có quan hệ gần với PCA. SVD có 2 bộ vector cơ sở thay vì 1 như PCA. SVD cho cùng vector cơ sở với PCA nếu các thuộc tính của dữ liệu có trung bình là 0
 3. **LSA (Latent Semantic Analysis)**: là một ứng dụng của SVD với dữ liệu văn bản. Với dữ liệu văn bản, mỗi dòng của ma trận dữ liệu ứng với mỗi văn bản trong dữ liệu và chứa tần suất xuất hiện của mỗi từ của văn bản đó. Do đây là ma trận thưa nên trung bình của mỗi cột rất gần 0, điều này dẫn đến kết quả khá gần với PCA, mặc dù không sử dụng mean centering. Tính thưa của ma trận cũng dẫn đến số chiều nội tại thấp, điều này cũng dẫn đến việc giảm số chiều bằng LSA có thể rất mạnh.
 
 Ngoài giảm chiều dữ liệu và nén dữ liệu thì PCA và SVD còn các ứng dụng khác như: Khử nhiễu, điền khuyết, giải hệ tuyến tính, nghịch đảo ma trận, ...
@@ -330,7 +330,7 @@ $$
 Dist(\overline{X}, \overline{Y}) = \bigg( \sum_{i=1}^d |x_i - y_i|^p \bigg) ^{1/p}
 $$
 
-2 giá trị _p_ hay dùng nhất là _p = 1_ (Euclidean) và _p = 2_ (Manhattan)
+2 giá trị _p_ hay dùng nhất là _p = 2_ (Euclidean) và _p = 1_ (Manhattan)
 
 ### 3.2.1. Impact of Domain-Specific Relevance
 
@@ -521,7 +521,7 @@ Việc thiết kế độ đo tương đồng cho time-series phụ thuộc vào
 
 ### 3.7.1. Impact of Behavioral Attribute Normalization
 
-1. **Dịch Chuyển Thuộc Tính Hành Vi (Behavioral Attribute Translation)**: Thuộc tính hành vi được chuẩn hóa trung bình trong quá trình tiền xử lý. Điều này có nghĩa là giá trị trung bình của thuộc tính sẽ được dịch chuyển về 0.
+1. **Dịch Chuyển Thuộc Tính Hành Vi (Behavioral Attribute Translation)**: Thuộc tính hành vi được chuẩn hóa trong quá trình tiền xử lý. Điều này có nghĩa là giá trị trung bình của thuộc tính sẽ được dịch chuyển về 0.
 2. **Biến Đổi Tỷ Lệ Thuộc Tính Hành Vi (Behavioral Attribute Scaling)**: Độ lệch chuẩn của thuộc tính hành vi được chuẩn hóa về 1 đơn vị. Điều này có nghĩa là các giá trị thuộc tính sẽ được chia cho độ lệch chuẩn của chúng để có được một thang đo thống nhất.
 
 Lưu ý rằng không phải lúc nào các vấn đề chuẩn hóa này cũng liên quan đến mọi ứng dụng. Một số ứng dụng có thể chỉ cần dịch chuyển, chỉ cần biến đổi tỷ lệ, hoặc không cần cả hai. Các ứng dụng khác có thể cần cả hai bước chuẩn hóa. Thực tế, việc chọn sai phương pháp chuẩn hóa có thể gây hại cho khả năng diễn giải kết quả. Do đó, người phân tích cần cẩn thận lựa chọn phương pháp chuẩn hóa phù hợp dựa trên nhu cầu cụ thể của ứng dụng.
@@ -532,7 +532,7 @@ Lưu ý rằng không phải lúc nào các vấn đề chuẩn hóa này cũng 
 
 Phép đo này coi một chuỗi thời gian như một điểm dữ liệu đa chiều, trong đó mỗi dấu thời gian là một chiều.
 
-Các điểm chính trong đoạn văn bao gồm:
+Các điểm chính trong bao gồm:
 
 1. **Áp dụng chuẩn $L_p$ cho chuỗi thời gian**:
 
@@ -560,7 +560,7 @@ Chuẩn $L_p$ là một công cụ hữu ích để đo khoảng cách giữa c�
 
 1. **Định Nghĩa và Ứng Dụng của DTW**:
 
-   - DTW kéo dài chuỗi dọc theo trục thời gian một cách động (dynamic) để tạo ra sự khớp tốt hơn giữa các chuỗi. Phương pháp này xuất phát từ lĩnh vực nhận dạng giọng nói để điều chỉnh các tốc độ nói khác nhau.
+   - DTW kéo dài chuỗi dọc theo trục thời gian một cách động (dynamic) để tính similarity tốt hơn giữa các chuỗi. Phương pháp này xuất phát từ việc nhận dạng giọng nói để điều chỉnh các tốc độ nói khác nhau.
    - DTW có thể được sử dụng cho cả dữ liệu chuỗi thời gian và chuỗi tuần tự, vì nó chỉ giải quyết vấn đề biến đổi thuộc tính ngữ cảnh (contextual attribute scaling) và không liên quan đến bản chất của thuộc tính hành vi (behavioral attribute).
 
 2. **Ưu Điểm của DTW so với Lp-norm**:
@@ -593,7 +593,7 @@ Chuẩn $L_p$ là một công cụ hữu ích để đo khoảng cách giữa c�
 6. **Tối Ưu Hóa và Ràng Buộc Thực Tiễn**:
 
    - Đường đi tối ưu có thể được hiểu như một đường đi tối ưu qua các giá trị khác nhau của $i$ và $j$ trong lưới $m \times n$.
-   - Một ràng buộc thông thường là ràng buộc cửa sổ, yêu cầu rằng DTW(i, j) chỉ được tính khi $|i - j| \leq w$. Điều này giúp giảm bớt số lượng giá trị cần tính toán trong quá trình đệ quy lập trình động.
+   - Một ràng buộc thông thường là ràng buộc cửa sổ, yêu cầu rằng DTW(i, j) chỉ được tính khi $|i - j| \leq w$. Điều này giúp giảm bớt số lượng giá trị cần tính toán trong quá trình đệ quy.
 
 7. **Mở Rộng DTW cho Nhiều Thuộc Tính Hành Vi**:
 
@@ -673,8 +673,8 @@ có thể thực hiện bằng các hàm kernel. Ví dụ: Kernel nhiệt $K(x) 
 
 Tiêu chí Đo Lường Độ Tương Tự
 
-- Đường Ngắn Nhất: Nút được kết nối qua các đường ngắn nên được coi là tương tự nhau hơn.
-- Độ Kết Nối: Nút được kết nối qua nhiều đường nên được coi là tương tự hơn.
+- Hai node được nối với đường ngắn. Với tiêu chí này, chúng ta có thể sử dụng các thuật toán tìm đường ngắn nhất. 
+- Hai node được nối với nhiều đường. Tiêu chí này gắn liền với khái niệm về tính liên thông (connectivity) trong đồ thị.
 
 Tóm tắt: Độ tương tự giữa các nút trong một mạng không hướng có thể được đo lường dựa trên nguyên tắc đồng hình, với các tiêu chí như khoảng cách đường ngắn nhất và số lượng đường kết nối giữa các nút. Việc sử dụng các hàm kernel heuristic cho phép chuyển đổi giữa chi phí và trọng số, giúp phù hợp với các ứng dụng cụ thể.
 
