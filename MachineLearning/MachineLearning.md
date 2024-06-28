@@ -1,7 +1,8 @@
 ![Machine Learning](MachineLearningFiglet.png)
-#AI/MachineLearning #HCMUS
+#HCMUS
 
 # [Link PDF File](MachineLearning.pdf)
+
 # Thông tin kỳ thi
 
 Thời gian: 15g40 - 01/07/2024
@@ -10,11 +11,11 @@ Phòng thi: E402 (NVC)
 # Lecture 0: Introduce to Machine Learning
 
 #AI
-#AI/MachineLearning
-#AI/MachineLearning/DeepLearning
-#AI/MachineLearning/SupervisedLearning
-#AI/MachineLearning/UnsupervisedLearning
-#AI/MachineLearning/ReinforcementLearning
+#MachineLearning
+#DeepLearning
+#SupervisedLearning
+#UnsupervisedLearning
+#ReinforcementLearning
 ![Relationship between Machine Learning, Deep Learning and Artificial Intelligence](relationship_ML_DL_AI.jpg)
 
 Types of ML (Machine Learning):
@@ -25,10 +26,12 @@ Types of ML (Machine Learning):
 
 # Lecture 1: Linear Regression
 
-#AI/MachineLearning/Regression
-#AI/MachineLearning/Regularization
-#AI/MachineLearning/SupervisedLearning
-#DataMining/DataPreprocessing/Normalization  
+#Regression
+#Regularization
+#SupervisedLearning
+#Normalization  
+#LinearRegression
+
 ![Example of Linear Regression](example_regression.jpg)
 
 $$y = \theta _0 + \theta_1 x_1 + \theta_2 x_2 + ... + \theta_d x_d = \sum_{j=0}^{d} \theta_j x_j$$
@@ -41,6 +44,8 @@ Cost Function:
 $$J(\theta) = \frac{1}{2n} \sum_{i=1}^{n} (h_{\theta} (x^{(i)}) - y^{(i)})^2$$
 
 ## Gradient descent
+
+#Algorithm/GradientDescent
 
 1. Choose initial value for $\theta$
 2. Until we reach the minimum, update $\theta$ to reduce $J(\theta)$  
@@ -61,6 +66,8 @@ Thuật toán sẽ hội tụ đến global minimum (với hàm lồi) và local
 
 ### 2. Stochastic gradient descent (SGD)
 
+#Algorithm/SGD
+
 Thuật toán sẽ update với từng data sample, hay nói cách khác là lần lượt một data sample sẽ được đưa vào thuật toán **(Note: phải shuffle data)**.
 
 Ưu điểm là thuật toán sẽ chạy nhanh hơn Batch GD. Phù hợp với online learning (là quá trình học cập nhật từ từ trong ML, mô hình sẽ phải phản ứng và học tập liên tục với từng dữ liệu mới)
@@ -68,6 +75,8 @@ Thuật toán sẽ update với từng data sample, hay nói cách khác là l�
 Nhược điểm là việc tiến về cực tiểu sẽ khó khăn hơn giá trị của hàm loss function sẽ bị tăng giảm một cách liên tục khó kiểm soát (high variance)
 
 ### 3. Mini-batch gradient descent
+
+#Hyperparameter/BatchSize
 
 Đây là thuật toán "nằm ở giữa" hai thuật toán trên. Dữ liệu đưa vào thụât toán sẽ là $k$ data sample
 
@@ -79,6 +88,8 @@ Về giá trị $k$, chúng ta sẽ set tùy thuộc vào RAM của máy tính (
 ![Compare 3 GD variants Table](<compare_3_variant_GD(1).jpg>)
 
 ## Choosing Learning Rate
+
+#Hyperparameter/LearningRate
 
 ![Choose LR](choose_LR.jpg)
 
@@ -93,6 +104,11 @@ $$\rm LR = LR * dropRate ^ \frac{epoch}{stepSize}$$
 ## Improved Learning
 
 ### 1. Feature Scaling
+
+#Normalization
+#Normalization/MinMax
+#Normalization/Standard
+#Normalization/Unit
 
 ![Scaling](scaling.jpg)
 
@@ -119,9 +135,14 @@ Thường dùng để scale ảnh
 
 ## Quality of Fit
 
+#Overfitting
+#Underfitting
+
 ![Quality of Fit](quality_of_fit.jpg)
 
 ## Regularization
+
+#Regularization
 
 Phương pháp giúp tự động control độ phức phức tạp của learned hypothesis
 Ý tưởng: penalize những $\theta_j$ lớn
@@ -134,9 +155,12 @@ $$J(\theta) = \frac{1}{2n} \sum_{i=1}^{n} (h_{\theta} (x^{(i)}) - y^{(i)})^2 + \
 
 # Lecture 2: Logistic Regression
 
-#AI/MachineLearning/Classification
-#AI/MachineLearning/SupervisedLearning
-#AI/MachineLearning/Metrics
+#Classification
+#SupervisedLearning
+#Metrics
+#LogisticRegression
+#Algorithm/Sigmoid
+#Algorithm/Softmax
 
 Đây là thuật toán dùng cho mục đích Classification (Binary hoặc Multi-class classification)
 
@@ -173,13 +197,18 @@ Tương tự như Linear Regression, ta cũng thêm đại lượng $\lambda \su
 
 ## Metrics
 
+#Metrics/Recall
+#Metrics/Precision
+#Metrics/F1Score
+
 ![Metric CLR](metrics_clr.jpg)
 
 # Lecture 3: Naive Bayes Classification
 
 #Statistic/BayesTheorem
-#AI/MachineLearning/Classification
-#AI/MachineLearning/SupervisedLearning
+#Classification
+#SupervisedLearning
+#NaiveBayes
 
 ![[naivebayes_pipeline.jpg]]
 
@@ -188,6 +217,8 @@ Chữ "naive" có ý nghĩa giả định sự xuất hiện của một feature
 ![[example_naivebayes.jpg]]
 
 ## Bayes Theorem
+
+#Statistic/BayesTheorem 
 
 $$P(A|B) = \frac{P(B|A) \times P(A)}{P(B)}$$
 Trong đó: $P(A|B)$ là xác suất xuât hiện của $A$ được cho trước bởi sự kiện $B$
@@ -240,6 +271,8 @@ Suy ra Label của $x'$ là **No**
 
 ## Gaussian Naive Bayes
 
+#Statistic/Gaussian
+
 Đây là phần dành cho các feature liên tục (Continuous-valued Features). Ví dụ: Nhiệt độ, áp suất, lượng mưa theo giờ,...
 
 Ta sẽ sử dụng công thức xác suất tuân theo phân phối chuẩn là
@@ -263,6 +296,8 @@ với
 - $|values(X)|$ là số lượng unique value tại feature $X$
 
 ## Log-probability
+
+#Algorithm/LogProbability
 
 Trong thực tế, việc các xác suất rất nhỏ xảy ra là chuyện bình thường và trong công thức ta rút ra ở trên, ta phải nhân chúng lại với nhau, gây ra hiện tương underflow. Dẫn đến máy tính không thể tính toán chính xác các giá trị này và gây ra hiện tương sai số.
 
@@ -288,11 +323,13 @@ $$
 
 # Lecture 4: Decision Tree & Random Forest
 
-#AI/MachineLearning/Classification
-#AI/MachineLearning/Regression
-#AI/MachineLearning/SupervisedLearning
-#AI/Algorithm
-#DataMining/DataPreprocessing/FeatureExtraction
+#Classification
+#Regression
+#SupervisedLearning
+#Algorithm
+#FeatureExtraction
+#DecisionTree
+#RandomForest
 
 Decision Tree là thuật toán dựa vào cấu trúc cây.
 
@@ -302,7 +339,7 @@ examples = Training Set
 Split ( node, {examples} ):
 	1. Find A, the best attribute for splitting the {examples}
 	2. Create decision nodes for attribute A (i.e., child nodes
-	of node)
+	     of node)
 	3. Split training {examples} to child nodes
 	4. If examples perfectly classified (subset is pure):
 			STOP
@@ -318,6 +355,8 @@ Như hình vẽ, ta thấy việc chọn Outlook feature tạo ra một nhánh �
 
 ## Entropy
 
+#Algorithm/Entropy 
+
 $$H(S) = -(p_{(+)} \log p_{(+)} + p_{(-)} \log p_{(-)})$$
 
 - Impure (3 yes / 3 no)
@@ -326,6 +365,8 @@ $$H(S) = -(p_{(+)} \log p_{(+)} + p_{(-)} \log p_{(-)})$$
   $$H(S) = - \frac{4}{4} \log{\frac{4}{4}} - \frac{0}{4} \log{\frac{0}{4}} 0$$
 
 ## Information Gain
+
+#Algorithm/InformationGain
 
 Đây là công thức giúp xác định xem đâu là feature phù hợp nhất để làm node
 
@@ -350,6 +391,8 @@ $$GainRatio(S, A) = \frac{Gain(S, A)}{SplitEntropy(S,A)}$$
 
 ## Avoid Overfitting for Decision Tree
 
+#Overfitting
+
 1. Dừng việc phát triền cây khi dữ liệu bị split không còn ý nghĩa
 2. Loại bỏ các thuộc tính không liên quan
 3. Sử dụng Post-prunning
@@ -371,11 +414,15 @@ Ví dụ:
 
 ## Multi-class Classification
 
+#Algorithm/Entropy 
+
 Sử dụng công thức Entropy cho Multi-class
 
 $$H(S) = - \sum_{c} p_c \log (p_c)$$
 
 ## Random Forest
+
+#RandomForest
 
 Training: grow K different decision trees:
 
@@ -392,6 +439,8 @@ Inference: given a new data point X:
 Fast, scalable, state-of-the-art performance.
 
 ## Gini impurity
+
+#Algorithm/Gini
 
 ### 1. Gini impurity of a dataset
 
@@ -420,6 +469,8 @@ $$\Delta Gini(Wind) = 0.459 - 0.429 = 0.03$$
 
 ## Regression Tree
 
+#Regression
+
 Idea: Tìm best point để split dataset thành 2 phân sao cho MSE nhỏ nhất tại điểm đó
 
 Steps:
@@ -431,6 +482,8 @@ Steps:
 ![[example_MSE_regressionTree.jpg]]
 
 ## Feature Importance - A single decision tree
+
+#FeatureSelection
 
 Idea: Tính số điểm "importance" của từng data feature. Điểm càng cao thì độ ảnh hưởng của feature đó càng lớn
 
@@ -448,14 +501,16 @@ Tương tự cho Gini, chỉ cần thay đổi giá trị $purity(n)$
 
 ## Feature Importance - Random Forest
 
+#FeatureSelection 
+
 Idea: Tính điểm Importance of Feature I trên từng cây đơn rồi cộng lại chia số cây.
 
 $$I_i = \frac{1}{|B|} \sum_{T \in B} I_i(T)$$
 
 # Lecture 5: K-Means Clustering
 
-#AI/MachineLearning/UnsupervisedLearning
-#AI/MachineLearning/Clustering
+#UnsupervisedLearning
+#Clustering
 
 ## Unsupervised Learning
 
@@ -476,6 +531,8 @@ Từ đó đưa ra kết luận là 2 hay nhiều data sample là giống hay kh
 ![[ex_clustering.jpg]]
 
 ## K-Means Clustering
+
+#Clustering/kMeans
 
 ### Định nghĩa
 
@@ -509,12 +566,14 @@ Với $|C_k|$ là số lượng data sample (hay observations) trong 1 cluster t
 
 - Áp dụng thụât toán cho các giá trị $k$ khác nhau, ví dụ: 1 đến 10
 - Với mỗi $k$, tính $WCV$
-- **Plot the curve** của $WVC$ so với $k$
+- **Plot the curve** của $WCV$ so với $k$
 - Chọn $k$ là điểm có sự giảm ở lần tiếp theo không đáng kể so với lần giảm trước đó.
 
 ![[elbow_kmeans.jpg]]
 
 ## Hierarchical Clustering
+
+#Clustering/Hierarchical
 
 Khác với K-Means Clustering, thuật toán Hierarchical Clustering cần phải xác định giá trị $k$ trước. Đây có thể là một nhược điểm
 
@@ -533,6 +592,8 @@ Sau đó, ta chọn $k$ phù hợp bằng cách kẻ một đường trên dendo
 ![[ex_dendogram.jpg]]
 
 ### Linkage
+
+#Clustering/Hierarchical/Linkage
 
 Ta sẽ tìm hiểu cách để tính khoảng cách của các cluster. Bởi vì một cluster sẽ có nhiều point nên sẽ có nhiều cách tính chẳng hạn như:
 
@@ -560,8 +621,9 @@ Cùng so sánh 4 loại linkage nhé
 
 # Lecture 06: Support Vector Machine (SVM)
 
-#AI/MachineLearning/Classification
-#AI/MachineLearning/SupervisedLearning
+#Classification
+#SupervisedLearning
+#SVM
 
 ## Introduce
 

@@ -25,14 +25,14 @@ Note sẽ bám theo sách **Data Mining The Textbook** gồm các nội dung sau
 
 # 1. Introduce to Data Mining
 
-#DataMining/AssociationPatternMining
-#DataMining/DataClustering
-#DataMining/OutlierDetection
-#DataMining/DataClassification
-#DataMining/DataCollection
-#DataMining/DataPreprocessing
-#DataMining/DataPreprocessing/FeatureExtraction
-#DataMining/StreamingData
+#AssociationPatternMining
+#DataClustering
+#OutlierDetection
+#Classification
+#DataCollection
+#DataPreprocessing
+#FeatureExtraction
+#StreamingData
 
 ## 1.1. Introduce
 
@@ -158,12 +158,12 @@ Hai thử thách với dòng dữ liệu lớn:
 
 # 2. Data Preparation
 
-#DataMining/DataPreprocessing
-#DataMining/DataPreprocessing/FeatureSelection
-#DataMining/DataPreprocessing/FeatureExtraction
-#DataMining/DataPreprocessing/DataCleaning
-#DataMining/DataPreprocessing/Normalization
-#DataMining/DataPreprocessing/ReductionDimension
+#DataPreprocessing
+#FeatureSelection
+#FeatureExtraction
+#DataCleaning
+#Normalization
+#ReductionDimension
 
 ## 2.1. Introduction
 
@@ -230,6 +230,8 @@ Bảng các thuật toán để biến đổi dữ liệu
 
 ### 2.4.1. Data Sampling
 
+#DataSampling
+
 Lợi thế của lấy mẫu dữ liệu là sự đơn giản, trực quan và dễ thực hiện
 
 Có 2 cách thức lấy mẫu dữ liệu
@@ -279,9 +281,9 @@ Có 2 phương pháp chính trong việc feature selection:
 
 ### 2.4.3. Data reduction with axis rotation (Giảm chiều bằng phép xoay trục)
 
-#DataMining/DataPreprocessing/ReductionDimension/PCA
-#DataMining/DataPreprocessing/ReductionDimension/SVD
-#DataMining/DataPreprocessing/ReductionDimension/LSA
+#ReductionDimension/PCA
+#ReductionDimension/SVD
+#ReductionDimension/LSA
 
 Trong dataset thực tế thường tồn tại các tương quan giữa các feature khác nhau và chúng thường không chặt chẽ và xác định một cách thủ công.
 
@@ -307,8 +309,8 @@ Ta sẽ tìm hiểu hai phương pháp là
 
 # 3. Similarity and Distances
 
-#DataMining/Similarity
-#DataMining/Distances
+#Similarity
+#Distances
 
 ## 3.1. Introduction
 
@@ -318,9 +320,9 @@ Việc lựa chọn hàm tương đồng (hoặc hàm khoảng cách, tùy thu�
 
 ## 3.2. Quantitative Data
 
-#DataMining/Distances/Euclidean
-#DataMining/Distances/Manhattan
-#DataMining/Distances/LpNorm
+#Distances/Euclidean
+#Distances/Manhattan
+#Distances/LpNorm
 
 Công thức khoảng cách phổ biến nhất với dữ liệu định lượng là $L_p - Norm$
 
@@ -332,7 +334,7 @@ $$
 
 ### 3.2.1. Impact of Domain-Specific Relevance
 
-#DataMining/Distances/Minkowski
+#Distances/Minkowski
 
 Do ảnh hướng về tầm quan trọng của feature này so với feature kia. Công thức $L_p - Norm$ sẽ được thêm trọng số phía trước và trở thành công thức _Minkowski_
 
@@ -358,7 +360,7 @@ Với các _p_ lớn thì ảnh hưởng của các thuộc tính không quan tr
 
 ### 3.2.6. Impact of Data Distribution
 
-#DataMining/Distances/Mahalanobis
+#Distances/Mahalanobis
 
 Trong nhiều ứng dụng, việc tính khoảng cách còn phụ thuộc vào phân phối của dữ liệu.
 
@@ -372,7 +374,7 @@ $$
 
 ### 3.2.7 Nonlinear Distributions: ISOMAP
 
-#DataMining/Distances/ISOMAP
+#Distances/ISOMAP
 
 ![[ex-isomap.png]]
 
@@ -395,7 +397,7 @@ Như hình vẽ 3.6a, khoảng cách giữa (A,B) và (C,D) được cho là b�
 
 ## 3.3. Categorical Data
 
-#DataMining/Similarity/IOF
+#Similarity/IOF
 
 Một cách đơn giản để tính khoảng cách giữa các dữ liệu định tính là sử dụng kĩ thuật nhị phân hóa (one hot encoding)
 
@@ -446,9 +448,9 @@ $$
 
 ## 3.5. Text Document Data
 
-#DataMining/Similarity/IDF
-#DataMining/Similarity/Jaccard
-#DataMining/Similarity/Cosine
+#Similarity/IDF
+#Similarity/Jaccard
+#Similarity/Cosine
 
 Văn bản có thể được xem là dữ liệu định lương đa chiều với tần suất xuất hiện của mỗi từ là một thuộc tính.
 
@@ -486,7 +488,7 @@ Một công thức có mục tiêu tương tụ nhưng ít phổ biến hơn là
 
 ## 3.6. Binary and Set Data
 
-#DataMining/Similarity/Jaccard
+#Similarity/Jaccard
 
 Dữ liệu nhị phân là một dạng đặc biệt của dữ liệu dạng tập hợp, trong đó giá trị 1 biểu thị sự có mặt của một phần tử trong tập hợp, còn giá trị 0 biểu thị sự vắng mặt của phần tử đó
 
@@ -526,7 +528,7 @@ Lưu ý rằng không phải lúc nào các vấn đề chuẩn hóa này cũng 
 
 ### 3.7.2. $L_p - Norm$
 
-#DataMining/Distances/LpNorm
+#Distances/LpNorm
 
 Phép đo này coi một chuỗi thời gian như một điểm dữ liệu đa chiều, trong đó mỗi dấu thời gian là một chiều.
 
@@ -551,8 +553,8 @@ Chuẩn $L_p$ là một công cụ hữu ích để đo khoảng cách giữa c�
 
 ### 3.7.3. Dynamic Time Warping Distance
 
-#DataMining/Distances/DWT
-#DataMining/Distances/LpNorm
+#Distances/DWT
+#Distances/LpNorm
 
 ![[content-dtw.png]]
 
@@ -714,7 +716,7 @@ $$D = {(O_i, O_j): O_i \text{is dissimilar to } O_j}$$
 
 # 4. Association Pattern Mining
 
-#DataMining/AssociationPatternMining
+#AssociationPatternMining
 
 ## 4.1. Introduction
 
@@ -725,8 +727,6 @@ Mục tiêu của bài toán là xác định các liên hệ giữa các nhóm 
 mua bởi khách hàng.
 
 ## 4.2. The Frequent Pattern Mining Model
-
-#DataMining/AssociationPatternMining/FrequentPattern
 
 Giả định CSDL _T_ chứa _n_ giao dịch $T_1, T_2, \ldots, T_n$
 
@@ -778,7 +778,7 @@ $$conf(X_2 \Rightarrow I - X_2) \geq conf(X_1 \Rightarrow I - X_1)$$
 
 ### 4.4.1. Brute Force Algorithms
 
-#DataMining/AssociationPatternMining/BruteForce
+#AssociationPatternMining/BruteForce
 
 ![[itemset-lattice.png]]
 
@@ -793,7 +793,7 @@ Do đó, ta sẽ tận dụng Downward Closure Property
 
 ### 4.4.2. Apriori Algorithm
 
-#DataMining/AssociationPatternMining/Apriori
+#AssociationPatternMining/Apriori
 
 Thuật toán Apriori cũng áp dụng tính chất Downward Closure
 
@@ -829,7 +829,7 @@ Lặp cho tới khi $F_k$ rỗng thì dừng.
 
 # 6. Cluster Analysis
 
-#DataMining/DataClustering
+#Clustering
 
 ## 6.1. Introduction
 
@@ -842,7 +842,7 @@ Lặp cho tới khi $F_k$ rỗng thì dừng.
 
 ## 6.2. Feature Selection for Clustering
 
-#DataMining/DataPreprocessing/FeatureSelection
+#FeatureSelection
 
 Mục tiêu chính của việc chọn lọc đặc trưng là loại bỏ các đặc trưng nhiễu
 
@@ -874,7 +874,7 @@ Trong các mô hình lọc, một số tiêu chí cụ thể được sử dụn
 
 #### 3. Entropy
 
-#AI/Algorithm/Entropy
+#Algorithm/Entropy
 
 - **Mô tả**: Dữ liệu có sự phân cụm cao sẽ phản ánh đặc tính phân cụm của nó trên các phân phối khoảng cách nền tảng.
   ![[dist-distribution.png]]
@@ -934,8 +934,6 @@ Trong trường hợp này, các tập hợp con đặc trưng được xây d�
 
 ## 6.3. Representative-Based Algorithms (Thuật Toán Phân Cụm Dựa Trên Đại Diện)
 
-#DataMining/DataClustering/Representative
-
 Các thuật toán dựa theo đại diện dựa trực tiếp vào khái niệm
 khoảng cách (hoặc sự tương đồng) để gom nhóm các điểm dữ liệu.
 
@@ -961,10 +959,10 @@ Các bài toàn tối ưu này thường được giải bằng phương pháp l
 
 ### 6.3.1. k-Means Clustering
 
-#AI/MachineLearning/Clustering/kMeans
+#Clustering/kMeans
 
 Trong thuật toán k-Means, hàm distance là Euclidean
-#DataMining/Distances/Euclidean
+#Distances/Euclidean
 
 $$Dist(X_i, Y_j) = ||(X_i - Y_j)||^2_2$$
 
@@ -974,7 +972,7 @@ $$Dist(X_i, Y_j) = ||(X_i - Y_j)||^2_2$$
 
 Biến thể k-Means với distance Mahalanobis
 
-#DataMining/Distances/Mahalanobis
+#Distances/Mahalanobis
 
 $$Dist(X_i, Y_j) = (X_i - Y_j)\Sigma^{-1}_j(X_i - Y_j)^T$$
 
@@ -1021,7 +1019,7 @@ Với các thuật toán dựa theo đại diện này, chúng ta có một số
 
 ## 6.4. Hierarchical Clustering Algorithms
 
-#DataMining/DataClustering/Hierarchical
+#Clustering/Hierarchical
 
 Các thuật toán gom cụm phân tầng thường gom cụm dữ liệu với
 khoảng cách. Tuy nhiên, các hàm khoảng cách thường không bắt
@@ -1096,7 +1094,7 @@ Lưu ý rằng thuật toán A có thể là bất kỳ thuật toán phân cụ
 
 ## 6.5. Probabilistic Model-Based Algorithms
 
-#DataMining/DataClustering/Probabilistic
+#Clustering/Probabilistic
 
 Các thuật toán như chúng ta đã tìm hiểu mà mỗi điểm dữ liệu được
 gom xác định gán vào một cụm cụ thể gọi là hard clustering algorithm.
@@ -1164,7 +1162,7 @@ biến thể.
 
 ### 6.6.1. Grid-Based Algorithms
 
-#DataMining/DataClustering/Grid
+#Clustering/Grid
 
 Với các phương pháp này, dữ liệu được rời rạc hóa thành một số các
 khoảng (thường là cùng chiều rộng).
@@ -1190,11 +1188,11 @@ end
 
 ### 6.6.2. Density-Based Algorithms
 
-#DataMining/DataClustering/Density
+#Clustering/Density
 
 #### 6.6.2.1. DBSCAN
 
-#AI/MachineLearning/Clustering/DBSCAN
+#Clustering/Density/DBSCAN
 
 ```Copy
 Algorithm DBSCAN(Data: D, Radius: Eps, Density: τ )
@@ -1231,7 +1229,7 @@ Quá trình phân cụm:
 
 #### 6.6.2.2. DENCLUE
 
-#AI/MachineLearning/Clustering/DENCLUE
+#Clustering/Density/DENCLUE
 
 ```Copy
 Algorithm DENCLUE(Data: D, Density: τ )
@@ -1286,7 +1284,7 @@ Các cụm được xác định dựa trên mật độ và khoảng cách gi�
 ## 6.7. Graph-Based Algorithms
 
 #Graph
-#DataMining/DataClustering/Graph
+#Clustering/Graph
 
 Các thuật toán dựa theo đồ thị cung cấp một meta-framework
 chung mà trong đó gần như tất cả kiểu dữ liệu đều có thể được
@@ -1343,7 +1341,7 @@ B3: Trả về cluster (communities) tương ứng với nhóm còn l�
 
 ## 6.8. Non-negative Matrix Factorization
 
-#DataMining/DataPreprocessing/ReductionDimension/NMF
+#ReductionDimension/NMF
 
 Đây là một kĩ thuật giảm chiều dữ liệu, trong đó các thành phần của ma trận (cần giảm chiều) phải không âm.
 
@@ -1371,7 +1369,7 @@ Cluster validation là quá trình đánh giá chất lượng của một phân
 
 ### 6.9.1. Internal Validation Criteria
 
-#DataMining/DataClustering/SilhouetteScore
+#Clustering/SilhouetteScore
 
 Tiêu chí xác thực nội bộ được sử dụng khi không có tiêu chí bên ngoài để đánh giá chất lượng phân cụm
 
@@ -1396,7 +1394,7 @@ Các tiêu chí nội bộ phổ biến bao gồm:
 
 # 8. Outlier Analysis
 
-#DataMining/OutlierDetection
+#OutlierDetection
 
 ## 8.1. Introduction
 
@@ -1430,7 +1428,7 @@ thuộc một trong hai loại.
 
 ## 8.2. Extreme Value Analysis
 
-#DataMining/OutlierDetection/ExtremeValue
+#OutlierDetection/ExtremeValue
 
 Phân tích giá trị cực hạn là một dạng phân tích ngoại lai với các điểm dữ liệu ở vùng ngoài của dữ liệu.
 
@@ -1484,7 +1482,7 @@ end
 
 ## 8.3. Probabilistic Models
 
-#DataMining/OutlierDetection/Probabilistic
+#OutlierDetection/Probabilistic
 
 Các mô hình xác suất dựa trên sự tổng quát hóa của các phương pháp phân tích giá trị cực hạn đa biến.
 
@@ -1498,7 +1496,7 @@ Nguyên lí tổng quát của sử dụng mô hình hỗn hợp để detect ou
 
 ## 8.4. Clustering for Outlier Detection
 
-#DataMining/OutlierDetection/Clustering
+#OutlierDetection/Clustering
 
 Nếu việc gom nhóm tìm các cụm dữ liệu dày đặc thì việc phân tích ngoại lai tìm các điểm xa những cụm này. Một cách nhìn đơn giản ở đây là mỗi điểm dữ liệu nếu không nằm trong một cụm nào khi gom nhóm thì sẽ được xem là ngoại lai.
 
@@ -1517,7 +1515,7 @@ Nhược điểm chính của clustering algorithms là chúng nhiều khi khôn
 
 ## 8.5. Distance-Based Outlier Detection
 
-#DataMining/OutlierDetection/Distance
+#OutlierDetection/Distance
 
 Do ngoại lai là các điểm dữ liệu ở xa các vùng dữ liệu dày đặc, chúng ta cũng có thể sử dụng khoảng cách của một điểm đến k-nearest neighbor để tính điểm ngoại lai của điểm đó.
 
@@ -1540,6 +1538,8 @@ Pruning methods chỉ được dùng khi các ngoại lai top-_r_ cần được
 Do đó, các phương pháp cắt xén chỉ thích hợp cho dự đoán nhị phân cho ngoại lai (binary labels)
 
 #### 8.5.1.1. Sampling Methods
+
+#DataSampling
 
 B1: Chọn mẫu con
 
@@ -1585,7 +1585,7 @@ Khoảng cách Euclidean truyền thống không phản ánh đúng khoảng cá
 
 #### 8.5.2.1. Local Outlier Factor (LOF)
 
-#DataMining/OutlierDetection/Distance/LOF
+#OutlierDetection/Distance/LOF
 
 Các định nghĩa:
 
@@ -1606,7 +1606,7 @@ Trong trường hợp các cụm có mật độ khác nhau (như hình 8.8a), g
 
 #### 8.5.2.2. Instance-Specific Mahalanobis Distance
 
-#DataMining/Distances/Mahalanobis
+#Distances/Mahalanobis
 
 Ở đây, khoảng cách Mahalanobis liên quan trực tiếp đến hình dạng của phân phối dữ liệu, nhưng thường là theo cách hiểu toàn cục. Tuy nhiên, chúng ta cũng có thể sử dụng khoảng cách Mahalanobis cục bộ.
 
@@ -1624,7 +1624,7 @@ Cách tiếp cận này được thiết kế để điều chỉnh theo hình d
 
 ## 8.6. Density-Based Methods
 
-#DataMining/OutlierDetection/Density
+#OutlierDetection/Density
 
 Các phương pháp phát hiện ngoại lai theo mật độ được dựa trên các nguyên lý tương tự như các phương pháp gom nhóm theo mật độ. Ý tưởng chính là xác định các vùng thưa trong dữ liệu đằng sau để chọn ra các ngoại lai.
 
@@ -1659,7 +1659,7 @@ $$K_h(X - X_i) = (\frac{1}{h\sqrt{2\pi}})^d e^{-\frac{||X - X_i||^2}{2h^2}}$$
 
 ## 8.7. Information-Theoretic Models
 
-#DataMining/OutlierDetection/Infomation-Theoretic
+#OutlierDetection/Infomation-Theoretic
 
 (?...?)
 
@@ -1681,8 +1681,8 @@ Tuy nhiên, các khuyết điểm của các tiêu chí trong trong phân tích 
 
 ### 8.8.2. Receiver Operating Characteristic (ROC)
 
-#AI/MachineLearning/Metrics/ROC
-#AI/MachineLearning/Metrics/Recall
+#Metrics/ROC
+#Metrics/Recall
 
 Các thuật toán phát hiện ngoại lai thường được đánh giá với các độ đo ngoài khi chúng ta có nhãn các ngoại lai từ dữ liệu synthetic hoặc các trường hợp hiếm có từ dữ liệu thật.
 
@@ -1703,3 +1703,9 @@ Với các mô hình phát hiện ngoại lai, một ngưỡng nào đó thườ
 ### 8.8.3. Common mistakes
 
 Đối với các bài toán Unsupervised Learning nhưng có label để validation, tuyệt đối không sử dụng label cho mục đích tinh chuẩn thuật toán
+
+# 10. Data Classification
+
+#Classification
+
+Đọc thêm tại [[MachineLearning.pdf]] hoặc [[MachineLearning]] 

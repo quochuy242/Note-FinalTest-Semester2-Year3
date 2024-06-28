@@ -1,0 +1,15 @@
+{
+	"nodes":[
+		{"id":"12bebd3c77d0507b","type":"text","text":"**Lịch thi Cuối kỳ 2 Năm 3**\n\n| ID \t|    Date    \t|  Hour \t| Room \t|             Name            \t| Location \t|\n|:--:\t|:----------:\t|:-----:\t|:----:\t|:---------------------------:\t|:--------:\t|\n|  1 \t| 29/06/2024 \t| 09g55 \t| E403 \t|      Khai thác dữ liệu      \t|    NVC   \t|\n|  2 \t| 01/07/2024 \t| 09g55 \t| F104 \t| Lý thuyết tài chính tiền tệ \t|    LT    \t|\n|  3 \t| 01/07/2024 \t| 15g40 \t| E402 \t|       Nhập môn máy học      \t|    NVC   \t|\n|  4 \t| 02/07/2024 \t| 07g45 \t| F304 \t|     Phân tích thuật toán    \t|    NVC   \t|\n|  5 \t| 10/07/2024 \t| 13g30 \t| E404 \t|  Hệ quản trị cơ sở dữ liệu  \t|    NVC   \t|","x":-700,"y":-400,"width":700,"height":280},
+		{"id":"d21ce28dfc844506","x":-683,"y":-39,"width":667,"height":303,"type":"text","text":"**Plan ôn thi**\n\n- T7: Sau khi thi xong Data Mining, đi cà phê ôn LTTCTT. Làm bài tập, học công thức\n- CN: Ôn Machine Learning\n- T2: Sau khi thi ở NVC xong, về nhà bé Nghi tá túc và ôn PTTT cho sáng mai (**Note**: Thi lúc 7h45, nên dậy vào lúc 6h để chuẩn bị)\n- Tới hết 5/7, hoàn thành TH Biến hình ảnh\n- Tới hết 9/7, ôn DBMS bằng cách take note và ôn query"},
+		{"id":"4b1d6da19a4f08a6","type":"file","file":"Note-FinalTest-Semester2-Year3/DataMining/DataMining.md","x":136,"y":-260,"width":444,"height":382},
+		{"id":"577cc0955b17bd9c","type":"file","file":"Note-FinalTest-Semester2-Year3/MachineLearning/MachineLearning.md","x":136,"y":-611,"width":444,"height":300},
+		{"id":"ea2f652215bfdf6f","x":158,"y":-1000,"width":400,"height":320,"type":"file","file":"QooBee GIF/qoobee1.gif"},
+		{"id":"51ab09ea3375afbe","x":-683,"y":-902,"width":444,"height":444,"type":"file","file":"QooBee GIF/qoobee3.webp"}
+	],
+	"edges":[
+		{"id":"b838ddb841e175ff","fromNode":"12bebd3c77d0507b","fromSide":"right","toNode":"577cc0955b17bd9c","toSide":"left"},
+		{"id":"78195bb797850e2f","fromNode":"12bebd3c77d0507b","fromSide":"right","toNode":"4b1d6da19a4f08a6","toSide":"left"},
+		{"id":"7927b3dd15b7ca9c","fromNode":"12bebd3c77d0507b","fromSide":"bottom","toNode":"d21ce28dfc844506","toSide":"top"}
+	]
+}
