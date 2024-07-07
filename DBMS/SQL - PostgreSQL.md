@@ -1,7 +1,7 @@
 
 #HCMUS 
 #PostgreSQL
-#MongoDB
+#SQL
 
 
 # Thông tin kì thi
@@ -252,6 +252,8 @@ Ví dụ:
 
 ## 2.3. **CRUD**
 
+#CRUD
+
 CRUD là viết tắt của các thao tác cơ bản trong cơ sở dữ liệu: Create (Tạo), Read (Đọc), Update (Cập nhật), và Delete (Xóa). Dưới đây là cách thực hiện các thao tác CRUD trong PostgreSQL:
 
 ### 1. **Create (Tạo)**
@@ -464,6 +466,8 @@ CREATE TABLE example (
 
 ## 2.5. **Inheritance**
 
+#Inheritance
+
 Như trong OOP, Inheritance là tính kế thừa giữa hai table với nhau. 
 
 ```sql
@@ -521,6 +525,8 @@ WHERE c.elevation > 500 AND c.tableoid = p.oid;
 | capitals | Madison   | 845       |
 
 ## 2.6. **Table Partition**
+
+#TablePartition
 
 Table partitioning là một kỹ thuật giúp cải thiện hiệu suất truy vấn và quản lý dữ liệu bằng cách **chia một bảng lớn thành nhiều bảng nhỏ hơn**, được gọi là "partitions" (phân vùng). 
 
@@ -620,6 +626,8 @@ FOR VALUES FROM ('2023-01-01') TO ('2024-01-01');
 
 ## 2.7. **Thứ tự thực hiện trong Query**
 
+#Query
+
 Giả sử ta có một truy vấn (full) như sau:
 
 ```sql
@@ -646,6 +654,8 @@ G --> H[LIMIT/OFFSET]
 ```
 
 ## 2.8. **JOIN**
+
+#Query/Join
 
 ### 1. **INNER JOIN**
 
@@ -783,6 +793,8 @@ Giả sử chúng ta có hai bảng `A` và `B`:
 - **CROSS JOIN:** Lấy tất cả các kết hợp của các hàng từ cả hai bảng.
 
 ## 2.9. **Window Functions**
+
+#WindowFunction
 
 Window functions cho phép bạn thực hiện các phép tính trên các nhóm hàng liên quan đến hàng hiện tại mà không cần phải nhóm các hàng này lại với nhau như trong các hàm tổng hợp (aggregate functions). 
 
@@ -1014,6 +1026,8 @@ FROM employees;
 
 ### Câu hỏi 6: Chỉ mục (Index) là gì?
 
+#Indexing
+
 **Câu trả lời:** Chỉ mục (Index) là một cấu trúc dữ liệu được tạo ra trong cơ sở dữ liệu để tăng tốc độ truy vấn và thao tác dữ liệu. Chỉ mục tương tự như một cuốn sách hướng dẫn, giúp cơ sở dữ liệu tìm kiếm và truy cập dữ liệu nhanh hơn. Tuy nhiên, chỉ mục cũng có thể làm chậm các thao tác ghi (INSERT, UPDATE, DELETE) vì cơ sở dữ liệu cần phải cập nhật chỉ mục mỗi khi dữ liệu thay đổi.
 
   ```sql
@@ -1036,6 +1050,8 @@ FROM employees;
   ```
 
 ### Câu hỏi 8: Normalization là gì? Các dạng chuẩn hóa phổ biến?
+
+#Normalization 
 
 **Câu trả lời:** Normalization (Chuẩn hóa) là quá trình tổ chức dữ liệu trong cơ sở dữ liệu để giảm thiểu sự dư thừa và cải thiện tính toàn vẹn dữ liệu. Các dạng chuẩn hóa phổ biến bao gồm:
 
@@ -1077,6 +1093,8 @@ FROM employees;
 
 ### Câu hỏi 11: SQL Injection là gì và làm thế nào để phòng chống nó?
 
+#SQL_Injection
+
 SQL Injection là một kỹ thuật tấn công bảo mật trong đó kẻ tấn công chèn mã SQL độc hại vào các truy vấn SQL thông qua các đầu vào của ứng dụng, nhằm truy cập hoặc thao tác dữ liệu không được phép.
 
 Để phòng chống SQL Injection, có thể sử dụng các biện pháp như:
@@ -1105,6 +1123,8 @@ SQL Injection là một kỹ thuật tấn công bảo mật trong đó kẻ t�
 
 ### Câu hỏi 13: CTE (Common Table Expression) là gì và lợi ích của nó?
 
+#CTE
+
 CTE là một biểu thức bảng tạm thời được xác định trong một câu lệnh SELECT.
 
 CTE giúp cải thiện khả năng đọc và bảo trì mã, giúp viết các truy vấn phức tạp một cách dễ dàng hơn và có thể đệ quy (recursive).
@@ -1131,6 +1151,8 @@ COLLATION có thể được thiết lập ở mức cơ sở dữ liệu, bản
 
 ### Câu hỏi 15: Indexing là gì và các loại Index phổ biến?
 
+#Indexing
+
 Indexing là quá trình tạo ra các chỉ mục để tăng tốc độ truy vấn dữ liệu trong cơ sở dữ liệu.
 
 Các loại index phổ biến:
@@ -1151,6 +1173,7 @@ ACID là viết tắt của các thuộc tính sau:
   2. **Consistency**: Transaction đưa cơ sở dữ liệu từ trạng thái nhất quán này sang trạng thái nhất quán khác.
   3. **Isolation**: Các transaction độc lập với nhau và không ảnh hưởng đến nhau.
   4. **Durability**: Sau khi transaction hoàn thành, các thay đổi dữ liệu được bảo đảm lưu trữ bền vững.
+
   ```sql
   BEGIN;
   INSERT INTO accounts (id, balance) VALUES (1, 100);
@@ -1249,6 +1272,9 @@ CREATE TABLE employees (
 
 ### Câu hỏi 22: DML và DDL là gì?
 
+#DDL
+#DML 
+
 DML là viết tắt của Ngôn ngữ thao tác dữ liệu (Data Manipulation Language): INSERT, UPDATE và DELETE là các câu lệnh DML.
 
 DDL là viết tắt của Ngôn ngữ định nghĩa dữ liệu (Data Definition Language): CREATE, ALTER, DROP, RENAME là các câu lệnh DDL.
@@ -1258,3 +1284,25 @@ DDL là viết tắt của Ngôn ngữ định nghĩa dữ liệu (Data Definiti
 Thứ tự các mệnh đề SQL SELECT là: SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY. 
 
 Trong đó SELECT, FROM là bắt buộc.
+
+# 3. PostgreSQL vs MongoDB
+
+Sự khác nhau giữa MongoDB và PostgreSQL thể hiện qua nhiều khía cạnh như cấu trúc dữ liệu, mô hình lưu trữ, ngôn ngữ truy vấn, khả năng mở rộng, và các tính năng đặc biệt khác. 
+
+Dưới đây là bảng so sánh chi tiết giữa MongoDB và PostgreSQL:
+
+| **Đặc điểm**              | **MongoDB**                                                       | **PostgreSQL**                                                |
+|---------------------------|-------------------------------------------------------------------|---------------------------------------------------------------|
+| **Loại cơ sở dữ liệu**    | Cơ sở dữ liệu NoSQL, tài liệu (document-based)                    | Cơ sở dữ liệu SQL, quan hệ (relational)                       |
+| **Mô hình dữ liệu**       | JSON-like documents (BSON)                                        | Bảng với hàng và cột                                           |
+| **Schema**                | Schema-less (linh hoạt, không có cấu trúc cố định)                | Schema-based (cấu trúc cố định, bắt buộc phải định nghĩa schema) |
+| **Ngôn ngữ truy vấn**     | MongoDB Query Language (MQL)                                      | SQL (Structured Query Language)                               |
+| **Hỗ trợ JOIN**           | Không hỗ trợ trực tiếp JOIN phức tạp, có thể dùng lookup         | Hỗ trợ đầy đủ các loại JOIN (INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN) |
+| **Transactions**          | Hỗ trợ transactions đa tài liệu từ phiên bản 4.0                 | Hỗ trợ transactions đầy đủ, ACID-compliant                    |
+| **Khả năng mở rộng**      | Thiết kế cho horizontal scaling, sharding                        | Chủ yếu là vertical scaling, hỗ trợ một số tính năng horizontal scaling (như table partitioning) |
+| **Indexing**              | Hỗ trợ nhiều loại index như single field, compound, multikey, text, geoSpatial | Hỗ trợ nhiều loại index như B-tree, Hash, GiST, GIN, SP-GiST, BRIN |
+| **Replication**           | Hỗ trợ replica sets và sharding                                  | Hỗ trợ master-slave replication và streaming replication (logical replication) |
+| **Consistency**           | Eventually consistent by default, có thể cấu hình strong consistency | Strong consistency by default (ACID properties)               |
+| **Use Cases**             | Phù hợp cho các ứng dụng với dữ liệu phi cấu trúc, hệ thống phân tán, cần mở rộng dễ dàng | Phù hợp cho các ứng dụng cần tính toàn vẹn dữ liệu, giao dịch phức tạp, phân tích dữ liệu |
+| **Hỗ trợ JSON**           | Hỗ trợ lưu trữ và truy vấn tài liệu JSON natively                | Hỗ trợ lưu trữ và truy vấn tài liệu JSON với các kiểu dữ liệu JSON và JSONB |
+| **Full-Text Search**      | Hỗ trợ tích hợp full-text search                                 | Hỗ trợ tích hợp full-text search, mặc dù không mạnh bằng các công cụ chuyên dụng như Elasticsearch |
